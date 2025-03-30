@@ -1,0 +1,41 @@
+.header {
+  background: #fff;
+  z-index: 99;
+  position: fixed;
+  top: 0;
+  width: inherit;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+  .left {
+    display: flex;
+    gap: 0.5rem;
+    .logo {
+      color: #5329a3;
+    }
+    .menu {
+      list-style: none;
+      font-size: 1.2rem;
+      display: flex;
+      gap: 0.4rem;
+      .item {
+        padding: 0.2rem 0.4rem;
+        display: flex;
+        align-items: center;
+        gap: 0.1rem;
+        &:hover {
+          color: #5329a3;
+        }
+      }
+    }
+  }
+  .right {
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    .item {
+      cursor: pointer;
+    }
+  }
+}
