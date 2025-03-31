@@ -23,18 +23,8 @@
       font-size: 1.4rem;
     }
     .button {
-      background: #6b37d1;
-      font-size: 1rem;
-      color: #ffffff;
-      border-radius: 10px;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-top: 1rem;
       margin-right: auto;
-      padding: 0.8rem 2rem;
-      border: 0;
+      font-size: 1.4rem;
     }
   }
   .image {
@@ -42,5 +32,48 @@
     height: auto !important;
     max-width: 450px;
     aspect-ratio: 1/1;
+  }
+}
+
+@media (max-width: 768px) {
+  .banner {
+    .text {
+      gap: 0.5rem;
+      .title {
+        font-size: 1.7rem;
+      }
+      .description {
+        font-size: 1.2rem;
+      }
+      .button {
+        margin-right: auto;
+        font-size: 1.2rem;
+      }
+    }
+    .image {
+      max-width: 300px;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .banner {
+    .text {
+      gap: 0.5rem;
+      .title {
+        font-size: 1.4rem;
+      }
+      .description {
+        font-size: 1rem;
+      }
+      .button {
+        margin-right: auto;
+        font-size: 1rem;
+        padding: 0.4rem 1.2rem;
+      }
+    }
+    .image {
+      max-width: 300px;
+    }
   }
 }

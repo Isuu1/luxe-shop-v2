@@ -5,6 +5,7 @@ import React from "react";
 import { BiSolidSend } from "react-icons/bi";
 //Styles
 import styles from "./Banner.module.scss";
+import Button from "@/shared/components/ui/Button";
 
 const Banner: React.FC = () => {
   return (
@@ -15,9 +16,12 @@ const Banner: React.FC = () => {
         <p className={styles.description}>
           Discount 50% for the first transaction
         </p>
-        <button className={styles.button}>
-          Shop now <BiSolidSend />
-        </button>
+        <Button
+          icon={<BiSolidSend />}
+          text="Shop now "
+          className={styles.button}
+          variant="primary"
+        ></Button>
       </div>
       <Image
         src="/images/headphones2.webp"
