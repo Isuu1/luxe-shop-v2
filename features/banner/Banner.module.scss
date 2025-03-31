@@ -1,0 +1,79 @@
+.banner {
+  position: relative;
+  width: 100%;
+  min-height: 200px;
+  background: #5329a3;
+  border-radius: 14px;
+  padding: 0.75rem;
+  display: flex;
+  justify-content: space-around;
+  .text {
+    z-index: 2;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+    .title {
+      color: #fff;
+      font-size: 2rem;
+    }
+    .description {
+      color: #fff;
+      font-size: 1.4rem;
+    }
+    .button {
+      margin-right: auto;
+      font-size: 1.4rem;
+    }
+  }
+  .image {
+    position: relative !important;
+    height: auto !important;
+    max-width: 450px;
+    aspect-ratio: 1/1;
+  }
+}
+
+@media (max-width: 768px) {
+  .banner {
+    .text {
+      gap: 0.5rem;
+      .title {
+        font-size: 1.7rem;
+      }
+      .description {
+        font-size: 1.2rem;
+      }
+      .button {
+        margin-right: auto;
+        font-size: 1.2rem;
+      }
+    }
+    .image {
+      max-width: 300px;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .banner {
+    .text {
+      gap: 0.5rem;
+      .title {
+        font-size: 1.4rem;
+      }
+      .description {
+        font-size: 1rem;
+      }
+      .button {
+        margin-right: auto;
+        font-size: 1rem;
+        padding: 0.4rem 1.2rem;
+      }
+    }
+    .image {
+      max-width: 300px;
+    }
+  }
+}
