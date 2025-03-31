@@ -1,11 +1,13 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useRef, useState } from "react";
 
 //Animations
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 //Styles
 import styles from "./Search.module.scss";
 //Icons
-//import { RiSearchLine } from "react-icons/ri";
+import { RiSearchLine } from "react-icons/ri";
 
 export const searchBarVariants = {
   hidden: {
@@ -27,45 +29,73 @@ export const searchBarVariants = {
   },
 };
 
-const Search: React.FC = () => {
-  //const [searchQuery, setSearchQuery] = useState<string | null>(null);
+interface SearchProps {
+  closeSearch: () => void;
+}
+
+const Search: React.FC<SearchProps> = ({ closeSearch }) => {
+  const [searchQuery, setSearchQuery] = useState<string | null>(null);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+    console.log("value", value);
+  };
+
+  const handleInputClear = () => {
+    setSearchQuery(null);
+    if (inputRef.current) {
+      inputRef.current.value = ""; // Clear the input field
+    }
+  };
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (
+        searchContainerRef.current &&
+        !searchContainerRef.current.contains(e.target as Node)
+      ) {
+        closeSearch(); // Call the closeSearch function when clicking outside
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [closeSearch]);
 
   return (
     <motion.div
+      ref={searchContainerRef}
       className={styles.search}
       variants={searchBarVariants}
       animate="visible"
       initial="hidden"
       exit="exit"
     >
-      {/* <form className="mobile-search__form">
-          <label>
-            <RiSearchLine className="mobile-search__form__icon" />
-            <input
-              type="text"
-              className="mobile-search__form__input"
-              id="mobile-search__form__input"
-              onChange={handleInputChange}
-              autoComplete="off"
-            />
-          </label>
-          <div className="flex-center">
-            {searchQuery && (
-              <button
-                className="mobile-search__form__clear-button"
-                onClick={clearInput}
-              >
-                Clear
-              </button>
-            )}
-            <button
-              className="mobile-search__form__button"
-              onClick={closeSearch}
-            >
-              X
-            </button>
-          </div>
-        </form> */}
+      <div className={styles.inputContainer}>
+        <label className={styles.label}>search</label>
+        <input
+          className={styles.input}
+          ref={inputRef}
+          id="search"
+          type="text"
+          onChange={handleInputChange}
+        />
+        <span className={styles.icon}>
+          <RiSearchLine />
+        </span>
+        {searchQuery && (
+          <button className={styles.clearButton} onClick={handleInputClear}>
+            clear
+          </button>
+        )}
+      </div>
+
       {/* {searchQuery && (
           <p className="mobile-search__results-count">
             {`${matchingProducts.length} ${

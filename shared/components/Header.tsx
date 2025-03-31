@@ -79,7 +79,14 @@ const Header = () => {
       {/* <AnimatePresence mode="wait">
         {loginPromptOpen && <LoginPrompt />}
       </AnimatePresence> */}
-      <AnimatePresence>{searchOpen && <Search />}</AnimatePresence>
+      <AnimatePresence mode="wait">
+        {searchOpen && (
+          <Search
+            key="search-container"
+            closeSearch={() => setSearchOpen(false)}
+          />
+        )}
+      </AnimatePresence>
 
       <div className={styles.left}>
         <h1 className={styles.logo}>luxe.</h1>
