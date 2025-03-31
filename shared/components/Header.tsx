@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 //import { usePathname } from "next/navigation";
 
@@ -40,8 +40,11 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 import { FaUserAlt } from "react-icons/fa";
 
 import { FaBasketShopping } from "react-icons/fa6";
+import { AnimatePresence } from "framer-motion";
+import Search from "@/features/search/components/Search";
 
-const Navbar = () => {
+const Header = () => {
+  const [searchOpen, setSearchOpen] = useState<boolean>(false);
   //   const { showMenu, setShowMenu, userModal, loginPromptOpen, searchOpen } =
   //     useStateContext();
 
@@ -76,7 +79,7 @@ const Navbar = () => {
       {/* <AnimatePresence mode="wait">
         {loginPromptOpen && <LoginPrompt />}
       </AnimatePresence> */}
-      {/* <AnimatePresence mode="wait">{searchOpen && <Search />}</AnimatePresence> */}
+      <AnimatePresence>{searchOpen && <Search />}</AnimatePresence>
 
       <div className={styles.left}>
         <h1 className={styles.logo}>luxe.</h1>
@@ -101,7 +104,10 @@ const Navbar = () => {
         </nav>
       </div>
       <div className={styles.right}>
-        <FaMagnifyingGlass className={styles.item} />
+        <FaMagnifyingGlass
+          className={styles.item}
+          onClick={() => setSearchOpen(true)}
+        />
         <FaUserAlt className={styles.item} />
         <FaBasketShopping className={styles.item} />
         {/* <Link className={styles.item} href="/search">
@@ -134,4 +140,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Header;
