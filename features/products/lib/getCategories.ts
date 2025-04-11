@@ -11,6 +11,7 @@ export async function getCategories(): Promise<Category[]> {
         current
       },
     }
+    | order(title asc) // Optional: Order categories alphabetically
   `;
   try {
     const categories = await client.fetch<Category[]>(query);
