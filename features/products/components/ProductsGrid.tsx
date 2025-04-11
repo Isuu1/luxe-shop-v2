@@ -4,10 +4,16 @@ import React from "react";
 import CategorySelector from "./CategorySelector";
 // Styles
 import styles from "@/features/products/components/ProductsGrid.module.scss";
-//import { AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
+import ProductCard from "./ProductCard";
+import { Product } from "@/shared/types/product";
 //import { motion } from "framer-motion";
 
-const ProductsGrid = ({ products }) => {
+interface ProductsGridProps {
+  products: Product[]; // Replace 'any' with the actual type of your product data
+}
+
+const ProductsGrid: React.FC<ProductsGridProps> = ({ products }) => {
   //const [activeCategory, setActiveCategory] = useState<string>("All");
   console.log("products", products);
   //console.log("activeCategory", activeCategory);
@@ -20,24 +26,11 @@ const ProductsGrid = ({ products }) => {
   return (
     <div className={styles.productsGrid}>
       <CategorySelector />
-      {/* <AnimatePresence mode="popLayout">
-          {products.map((product) => (
-            // <motion.div
-            //   key={product._id}
-            //   variants={productAnimation}
-            //   initial="hidden"
-            //   animate="visible"
-            //   exit="exit"
-            // >
-            //   <Product
-            //     product={product}
-            //     smallCard={true}
-            //     userId={userId}
-            //     wishlist={wishlist}
-            //   />
-            // </motion.div>
-          ))}
-        </AnimatePresence> */}
+      <AnimatePresence mode="popLayout">
+        {products.map((product) => (
+          <ProductCard product={product} key={product._id} />
+        ))}
+      </AnimatePresence>
     </div>
   );
 };

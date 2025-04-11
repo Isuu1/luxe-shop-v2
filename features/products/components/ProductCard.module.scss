@@ -1,0 +1,13 @@
+.productCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  background: #f5f5f5;
+  border-radius: 20px;
+  padding: 0.75rem 0.75rem 0.5rem 0.75rem;
+  position: relative;
+  .image {
+    position: relative !important;
+    border-radius: 12px;
+  }
+}

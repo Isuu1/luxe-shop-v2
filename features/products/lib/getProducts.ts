@@ -1,5 +1,5 @@
 import { client } from "@/sanity/lib/client";
-import { Product } from "../types/product";
+import { Product } from "@/shared/types/product";
 
 export async function getProducts(): Promise<Product[]> {
   const query = `
