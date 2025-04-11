@@ -4,11 +4,11 @@ import { getProducts } from "@/features/products/lib/getProducts";
 
 export default async function Page() {
   const products = await getProducts();
-  console.log(products);
+
   return (
     <div className="page">
       <Banner />
-      <ProductsGrid />
+      <ProductsGrid products={products} />
     </div>
   );
 }
