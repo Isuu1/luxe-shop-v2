@@ -38,13 +38,14 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({ products }) => {
         activeCategory={activeCategory}
         setActiveCategory={setActiveCategory}
       />
-      <AnimatePresence mode="popLayout">
-        <div className={styles.products}>
+
+      <div className={styles.products}>
+        <AnimatePresence mode="wait">
           {displayedProducts.map((product) => (
             <ProductCard product={product} key={product._id} />
           ))}
-        </div>
-      </AnimatePresence>
+        </AnimatePresence>
+      </div>
     </div>
   );
 };

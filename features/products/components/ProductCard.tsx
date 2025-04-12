@@ -1,12 +1,35 @@
 import React from "react";
+import Image from "next/image";
 
 //Animations
 import { motion } from "framer-motion";
 //Styles
 import styles from "@/features/products/components/ProductCard.module.scss";
-import Image from "next/image";
+//Utils
 import { urlFor } from "@/sanity/lib/image";
+//Types
 import { Product } from "@/shared/types/product";
+
+export const productCardAnimation = {
+  visible: {
+    scale: 1,
+    transition: {
+      duration: 0.2,
+    },
+  },
+  hidden: {
+    scale: 0,
+    transition: {
+      duration: 0.2,
+    },
+  },
+  exit: {
+    scale: 0,
+    transition: {
+      duration: 0.2,
+    },
+  },
+};
 
 interface ProductCardProps {
   product: Product;
@@ -17,17 +40,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     <motion.div
       key={product._id}
       className={styles.productCard}
-      //variants={productAnimation}
+      variants={productCardAnimation}
       initial="hidden"
       animate="visible"
       exit="exit"
     >
-      {/* <Product
-                product={product}
-                smallCard={true}
-                userId={userId}
-                wishlist={wishlist}
-              /> */}
       <Image
         className={styles.image}
         src={urlFor(product.images && product.images[0]).toString()}
