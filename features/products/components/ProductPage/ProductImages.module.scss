@@ -1,0 +1,31 @@
+.productPageImages {
+  flex: 1 0 50%;
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  .mainImage {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1/1;
+    position: relative !important;
+    transition: all 0.3s;
+    border-radius: 15px;
+  }
+  .imageSlides {
+    display: grid;
+    margin-top: 1rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.3rem;
+    .slide {
+      aspect-ratio: 1/1;
+      position: relative !important;
+      border: 2px solid transparent;
+      border-radius: 1rem;
+      transition: all 0.3s;
+    }
+    .activeSlide {
+      border: 2px solid #6b37d1 !important;
+      background: #fff;
+    }
+  }
+}
