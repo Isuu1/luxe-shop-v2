@@ -33,9 +33,8 @@ export async function getProduct(slug: string): Promise<Product | undefined> {
 }
     `;
   try {
-    const product = await client.fetch<Product>(query, { slug });
-
-    return product;
+    const product = await client.fetch(query, { slug });
+    return product[0];
   } catch (error) {
     console.error("Error fetching product:", error);
   }
