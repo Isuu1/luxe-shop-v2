@@ -8,7 +8,7 @@ export type Product = {
   price: number;
   stars: number;
   images: SanityImageSource[];
-  category: Category[];
+  categories: Category[];
   slug: {
     current: string;
   };

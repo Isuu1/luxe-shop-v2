@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CategorySelector from "./CategorySelector";
 // Styles
 import styles from "@/features/products/components/ProductsGrid.module.scss";
@@ -14,22 +14,36 @@ interface ProductsGridProps {
 }
 
 const ProductsGrid: React.FC<ProductsGridProps> = ({ products }) => {
-  //const [activeCategory, setActiveCategory] = useState<string>("All");
-  console.log("products", products);
-  //console.log("activeCategory", activeCategory);
+  const [activeCategory, setActiveCategory] = useState<string>("All");
+  const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
 
-  // const sortedProductsByCategory = products.filter((product) => {
-  //   if (activeCategory === "All") return true;
-  //   return product.category === activeCategory;
-  // });
+  useEffect(() => {
+    // Filter the products based on the active category
+    const filteredProducts = products.filter((product) => {
+      // If 'All' is selected, include all products
+      if (activeCategory === "All") {
+        return true;
+      }
+      // Otherwise, check if the product's categories array includes the active category
+      return product.categories.some((cat) => cat.title === activeCategory);
+    });
+
+    // Update the state with the filtered list, triggering a re-render
+    setDisplayedProducts(filteredProducts);
+  }, [activeCategory, products]);
 
   return (
     <div className={styles.productsGrid}>
-      <CategorySelector />
+      <CategorySelector
+        activeCategory={activeCategory}
+        setActiveCategory={setActiveCategory}
+      />
       <AnimatePresence mode="popLayout">
-        {products.map((product) => (
-          <ProductCard product={product} key={product._id} />
-        ))}
+        <div className={styles.products}>
+          {displayedProducts.map((product) => (
+            <ProductCard product={product} key={product._id} />
+          ))}
+        </div>
       </AnimatePresence>
     </div>
   );

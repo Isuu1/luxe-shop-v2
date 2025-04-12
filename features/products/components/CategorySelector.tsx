@@ -12,9 +12,17 @@ import { MdOutlineSmartphone } from "react-icons/md";
 import { IoMdWatch } from "react-icons/io";
 import { FaSliders } from "react-icons/fa6";
 
-const CategorySelector = () => {
+interface CategorySelectorProps {
+  activeCategory: string;
+  setActiveCategory: (category: string) => void;
+}
+
+const CategorySelector: React.FC<CategorySelectorProps> = ({
+  activeCategory,
+  setActiveCategory,
+}) => {
   const [categories, setCategories] = useState<Category[]>([]);
-  const [activeCategory, setActiveCategory] = useState<string>("All");
+  //const [activeCategory, setActiveCategory] = useState<string>("All");
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   console.log(categories);
