@@ -41,6 +41,12 @@ h1 {
   gap: 1rem;
 }
 
+.flex-row-space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 @media (min-width: 1024px) {
   .main-layout {
     width: 90%;

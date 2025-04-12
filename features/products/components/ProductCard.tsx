@@ -9,6 +9,8 @@ import styles from "@/features/products/components/ProductCard.module.scss";
 import { urlFor } from "@/sanity/lib/image";
 //Types
 import { Product } from "@/shared/types/product";
+//Icons
+import { FaStar } from "react-icons/fa";
 
 export const productCardAnimation = {
   visible: {
@@ -52,9 +54,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         alt=""
         priority={true}
       />
-      <p>{product.price}</p>
-      <p>{product.name}</p>
-      <p>{product.stars}</p>
+      <div className="flex-row-space-between">
+        <div className={styles.details}>
+          <p className={styles.price}>£{product.price}</p>
+          <p>{product.name}</p>
+        </div>
+        <div className={styles.rating}>
+          <FaStar className={styles.icon} />
+          <span className={styles.number}>{product.stars}</span>
+        </div>
+      </div>
     </motion.div>
   );
 };

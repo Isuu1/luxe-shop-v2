@@ -10,4 +10,27 @@
     position: relative !important;
     border-radius: 12px;
   }
+  .details {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #747474;
+    .price {
+      font-weight: 900;
+    }
+  }
+  .rating {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-weight: 600;
+    .icon {
+      color: rgb(252, 240, 3);
+      font-size: 1.2rem;
+    }
+    .number {
+      position: relative;
+      top: 2px;
+    }
+  }
 }
