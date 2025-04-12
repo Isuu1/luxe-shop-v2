@@ -35,12 +35,16 @@ const ProductDescription: React.FC<ProductDescriptionProps> = ({ product }) => {
   });
 
   return (
-    <div>
-      <h2>{product.name}</h2>
-      <h2>{product.price}</h2>
-      {renderStars}
-      <span>{product.ratings}</span>
-      <PortableText value={product.details} />
+    <div className={styles.productDescription}>
+      <h2 className={styles.name}>{product.name}</h2>
+      <h2 className={styles.price}>£{product.price}</h2>
+      <div className={styles.rating}>
+        {renderStars}
+        <span>{product.ratings}</span>
+      </div>
+      <div className={styles.description}>
+        <PortableText value={product.details} />
+      </div>
     </div>
   );
 };
