@@ -1,6 +1,6 @@
 // app/products/lib/product-queries.ts
 import { client } from "@/sanity/lib/client";
-import { Category } from "../types/category";
+import { Category } from "../../../shared/types/category";
 
 export async function getCategories(): Promise<Category[]> {
   const query = `

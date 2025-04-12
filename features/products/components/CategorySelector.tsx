@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Category } from "../types/category";
+import { Category } from "../../../shared/types/category";
 import { getCategories } from "../lib/getCategories";
 //Styles
 import styles from "@/features/products/components/CategorySelector.module.scss";

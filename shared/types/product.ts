@@ -1,4 +1,5 @@
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import { Category } from "./category";
 
 export type Product = {
   _id: string;
@@ -7,7 +8,7 @@ export type Product = {
   price: number;
   stars: number;
   images: SanityImageSource[];
-  category: string;
+  category: Category[];
   slug: {
     current: string;
   };
