@@ -15,13 +15,21 @@ import { FaSliders } from "react-icons/fa6";
 const CategorySelector = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>("All");
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   console.log(categories);
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchCategories = async () => {
-      const fetchedCategories = await getCategories();
-      setCategories(fetchedCategories);
+      try {
+        const fetchedCategories = await getCategories();
+        setCategories(fetchedCategories);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     fetchCategories();
@@ -41,6 +49,28 @@ const CategorySelector = () => {
         return <BiSolidCategoryAlt />;
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className={styles.categoriesMenu}>
+        <li
+          className={`${styles.categoryItem} ${styles.categoryItemPlaceholder} `}
+        >
+          <p>placeholder</p>
+        </li>
+        <li
+          className={`${styles.categoryItem} ${styles.categoryItemPlaceholder} `}
+        >
+          <p>placeholder</p>
+        </li>
+        <li
+          className={`${styles.categoryItem} ${styles.categoryItemPlaceholder} `}
+        >
+          <p>placeholder</p>
+        </li>
+      </div>
+    );
+  }
 
   return (
     <ul className={styles.categoriesMenu}>

@@ -8,6 +8,10 @@
   flex-wrap: wrap;
   gap: 0.3rem;
   list-style: none;
+  .categoryItemPlaceholder p {
+    //Hide placeholder text
+    opacity: 0;
+  }
   .categoryItem {
     cursor: pointer;
     background: #f5f5f5;
