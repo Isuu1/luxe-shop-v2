@@ -2,6 +2,7 @@ import ProductDescription from "@/features/products/components/ProductPage/Produ
 import ProductImages from "@/features/products/components/ProductPage/ProductImages";
 import ProductSpecifications from "@/features/products/components/ProductPage/ProductSpecifications";
 import { getProduct } from "@/features/products/lib/getProduct";
+import BackLink from "@/shared/components/BackLink";
 
 export default async function Page({
   params,
@@ -18,6 +19,7 @@ export default async function Page({
 
   return (
     <div className="page">
+      <BackLink previousPage="Products" />
       <div className="flex-row">
         <ProductImages product={product} />
         <ProductDescription product={product} />
