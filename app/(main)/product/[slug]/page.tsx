@@ -1,5 +1,6 @@
 import ProductDescription from "@/features/products/components/ProductPage/ProductDescription";
 import ProductImages from "@/features/products/components/ProductPage/ProductImages";
+import ProductSpecifications from "@/features/products/components/ProductPage/ProductSpecifications";
 import { getProduct } from "@/features/products/lib/getProduct";
 
 export default async function Page({
@@ -21,6 +22,7 @@ export default async function Page({
         <ProductImages product={product} />
         <ProductDescription product={product} />
       </div>
+      <ProductSpecifications product={product} />
     </div>
   );
 }

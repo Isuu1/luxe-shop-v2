@@ -6,6 +6,7 @@ export type Product = {
   _id: string;
   name: string;
   details: PortableTextBlock[];
+  specification: PortableTextBlock[];
   price: number;
   stars: number;
   ratings: number;
