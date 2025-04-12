@@ -1,13 +1,17 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+
+//Components
 import CategorySelector from "./CategorySelector";
+import ProductCard from "./ProductCard";
+import SortingOptions from "./SortingOptions";
 // Styles
 import styles from "@/features/products/components/ProductsGrid.module.scss";
+//Animations
 import { AnimatePresence } from "framer-motion";
-import ProductCard from "./ProductCard";
+//Types
 import { Product } from "@/shared/types/product";
-//import { motion } from "framer-motion";
 
 interface ProductsGridProps {
   products: Product[]; // Replace 'any' with the actual type of your product data
@@ -15,6 +19,7 @@ interface ProductsGridProps {
 
 const ProductsGrid: React.FC<ProductsGridProps> = ({ products }) => {
   const [activeCategory, setActiveCategory] = useState<string>("All");
+  const [sortingOption, setSortingOption] = useState("Relevance");
   const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
 
   useEffect(() => {
@@ -27,17 +32,34 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({ products }) => {
       // Otherwise, check if the product's categories array includes the active category
       return product.categories.some((cat) => cat.title === activeCategory);
     });
-
+    const sortedProducts = [...filteredProducts].sort((a, b) => {
+      switch (sortingOption) {
+        case "PriceLowToHigh":
+          return a.price - b.price;
+        case "PriceHighToLow":
+          return b.price - a.price;
+        case "RatingLowToHigh":
+          return a.stars - b.stars;
+        case "RatingHighToLow":
+          return b.stars - a.stars;
+        case "Relevance":
+        default:
+          return 0; // No sorting
+      }
+    });
     // Update the state with the filtered list, triggering a re-render
-    setDisplayedProducts(filteredProducts);
-  }, [activeCategory, products]);
+    setDisplayedProducts(sortedProducts);
+  }, [activeCategory, products, sortingOption]);
 
   return (
     <div className={styles.productsGrid}>
-      <CategorySelector
-        activeCategory={activeCategory}
-        setActiveCategory={setActiveCategory}
-      />
+      <div className="flex-row">
+        <SortingOptions setSortingOption={setSortingOption} />
+        <CategorySelector
+          activeCategory={activeCategory}
+          setActiveCategory={setActiveCategory}
+        />
+      </div>
 
       <div className={styles.products}>
         <AnimatePresence mode="wait">

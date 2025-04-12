@@ -9,6 +9,8 @@
   .image {
     position: relative !important;
     border-radius: 12px;
+    object-fit: cover;
+    aspect-ratio: 1/1;
   }
   .details {
     font-size: 1rem;

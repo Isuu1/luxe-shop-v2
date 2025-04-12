@@ -41,6 +41,13 @@ h1 {
   gap: 1rem;
 }
 
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .flex-row-space-between {
   display: flex;
   justify-content: space-between;
