@@ -11,6 +11,7 @@ import { urlFor } from "@/sanity/lib/image";
 import { Product } from "@/shared/types/product";
 //Icons
 import { FaStar } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 export const productCardAnimation = {
   visible: {
@@ -38,6 +39,8 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const router = useRouter();
+
   return (
     <motion.div
       key={product._id}
@@ -46,6 +49,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       initial="hidden"
       animate="visible"
       exit="exit"
+      onClick={() => router.push(`/product/${product.slug.current}`)}
     >
       <Image
         className={styles.image}
