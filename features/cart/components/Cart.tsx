@@ -14,6 +14,7 @@ import { useCartContext } from "@/shared/providers/CartProvider";
 //Components
 import Button from "@/shared/components/ui/Button";
 import CartItem from "./CartItem";
+//Utils
 import { calculateAllQuantities, calculateTotalPrice } from "../lib/utils";
 
 export const cartVariants = {
