@@ -2,6 +2,8 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { Product } from "../types/product";
+import toast from "react-hot-toast";
+import { toastStyle } from "../styles/toast";
 interface CartContextType {
   showCart: boolean;
   setShowCart: React.Dispatch<React.SetStateAction<boolean>>;
@@ -53,12 +55,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       product.quantity = quantity;
       setCartItems([...cartItems, { ...product }]);
     }
-    // toast.success(`${qty} x ${product.name} added to cart`, {
-    //   position: "top-center",
-    //   duration: 2000,
-    //   style: { marginTop: "4rem" },
-    // });
-    //setQty(1);
+    toast.success(`${quantity} x ${product.name} added to cart`, toastStyle);
   };
 
   const updateCartItemQuantity = (id: string, value: string) => {
