@@ -1,15 +1,20 @@
-import { urlFor } from "@/sanity/lib/image";
-import { Product } from "@/shared/types/product";
 import Image from "next/image";
 import React from "react";
+
+//Utils
+import { urlFor } from "@/sanity/lib/image";
 //Styles
 import styles from "./CartItem.module.scss";
 //Icons
 import { FaMinusSquare } from "react-icons/fa";
 import { FaPlusSquare } from "react-icons/fa";
 import { MdRemoveShoppingCart } from "react-icons/md";
+//Components
 import Button from "@/shared/components/ui/Button";
+//Providers
 import { useCartContext } from "@/shared/providers/CartProvider";
+//Types
+import { Product } from "@/shared/types/product";
 
 interface CartItemProps {
   item: Product;

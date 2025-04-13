@@ -34,6 +34,7 @@
     margin-left: auto;
     font-size: 1.6rem;
     cursor: pointer;
+    transition: color 0.2s ease;
     &:hover {
       color: #6b37d1;
     }
