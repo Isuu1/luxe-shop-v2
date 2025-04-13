@@ -64,6 +64,15 @@ const Cart = () => {
   };
   const totalPrice = calculateTotalPrice();
 
+  const calculateAllQuantities = () => {
+    let total = 0;
+    cartItems.forEach((item) => {
+      total += item.quantity;
+    });
+    return total;
+  };
+  const totalQuantities = calculateAllQuantities();
+
   return (
     <motion.div
       className={styles.cart}
@@ -99,6 +108,7 @@ const Cart = () => {
         <div className={styles.totalPrice}>
           <p>Total:</p>
           <p>£{totalPrice}</p>
+          <p>({totalQuantities} items)</p>
         </div>
         <Button
           className={styles.checkoutButton}
