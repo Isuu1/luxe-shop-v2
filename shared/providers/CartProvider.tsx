@@ -10,6 +10,7 @@ interface CartContextType {
   totalPrice: number;
   setTotalPrice: React.Dispatch<React.SetStateAction<number>>;
   addToCart: (product: Product, quantity: number) => void;
+  updateCartItemQuantity: (id: string, value: string) => void;
 }
 
 const CartContext = createContext<CartContextType | null>(null);
@@ -75,9 +76,39 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     //setQty(1);
   };
 
+  const updateCartItemQuantity = (id: string, value: string) => {
+    const productPrice = cartItems.find((item) => item._id === id)?.price || 0;
+
+    const updatedCartItems = cartItems.map((item) => {
+      if (item._id === id) {
+        if (value === "increment") {
+          return { ...item, quantity: item.quantity + 1 };
+        }
+        if (value === "decrement") {
+          if (item.quantity > 1) {
+            return { ...item, quantity: item.quantity - 1 };
+          }
+        }
+      }
+      return item;
+    });
+    setCartItems(updatedCartItems);
+    setTotalPrice(
+      (prevTotalPrice) =>
+        prevTotalPrice + (value === "increment" ? 1 : -1) * productPrice
+    );
+  };
+
   return (
     <CartContext.Provider
-      value={{ showCart, setShowCart, cartItems, totalPrice, addToCart }}
+      value={{
+        showCart,
+        setShowCart,
+        cartItems,
+        totalPrice,
+        addToCart,
+        updateCartItemQuantity,
+      }}
     >
       {children}
     </CartContext.Provider>

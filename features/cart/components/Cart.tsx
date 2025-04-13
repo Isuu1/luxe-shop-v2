@@ -13,6 +13,7 @@ import { IoSend } from "react-icons/io5";
 import { useCartContext } from "@/shared/providers/CartProvider";
 //Components
 import Button from "@/shared/components/ui/Button";
+import CartItem from "./CartItem";
 
 export const cartVariants = {
   visible: {
@@ -38,7 +39,7 @@ export const cartVariants = {
 const Cart = () => {
   const cartRef = useRef<HTMLDivElement>(null);
 
-  const { setShowCart } = useCartContext();
+  const { setShowCart, totalPrice, cartItems } = useCartContext();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -74,23 +75,21 @@ const Cart = () => {
         <p className={styles.title}>Your cart</p>
         <span></span>
       </div>
-      <div className="cart-container__products_wrapper">
-        {/* <AnimatePresence>
-          {cartItems.length > 0 ? (
-            cartItems?.map((item, index) => (
-              <CartItem key={item._id} item={item} />
-            ))
-          ) : (
-            <div className="cart-container__empty-basket-msg">
-              <h2>No items yet</h2>
-            </div>
-          )}
-        </AnimatePresence> */}
+      <div className={styles.items}>
+        {/* <AnimatePresence> */}
+        {cartItems.length > 0 ? (
+          cartItems?.map((item) => <CartItem key={item._id} item={item} />)
+        ) : (
+          <div className="cart-container__empty-basket-msg">
+            <h2>No items yet</h2>
+          </div>
+        )}
+        {/* </AnimatePresence> */}
       </div>
       <div className={styles.checkout}>
         <div className={styles.totalPrice}>
           <p>Total:</p>
-          <p>£234</p>
+          <p>£{totalPrice}</p>
         </div>
         <Button
           className={styles.checkoutButton}

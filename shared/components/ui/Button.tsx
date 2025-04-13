@@ -4,7 +4,7 @@ import React from "react";
 import styles from "./Button.module.scss";
 
 interface ButtonProps {
-  text: string;
+  text?: string;
   icon?: React.ReactNode;
   iconPosition?: "left" | "right";
   variant?: "primary" | "secondary";
