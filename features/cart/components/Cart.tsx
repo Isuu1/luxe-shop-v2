@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 //Animations
 import { motion } from "framer-motion";
@@ -8,12 +8,52 @@ import { motion } from "framer-motion";
 import styles from "./Cart.module.scss";
 //Icons
 import { IoIosClose } from "react-icons/io";
-//import { IoSend } from "react-icons/io5";
+import { IoSend } from "react-icons/io5";
+//Context
 import { useCartContext } from "@/shared/providers/CartProvider";
+//Components
+import Button from "@/shared/components/ui/Button";
+
+export const cartVariants = {
+  visible: {
+    x: 0,
+    transition: {
+      duration: 0.2,
+    },
+  },
+  hidden: {
+    x: 300,
+    transition: {
+      duration: 0.2,
+    },
+  },
+  exit: {
+    x: 400,
+    transition: {
+      duration: 0.2,
+    },
+  },
+};
 
 const Cart = () => {
-  const cartRef = useRef(null);
+  const cartRef = useRef<HTMLDivElement>(null);
+
   const { setShowCart } = useCartContext();
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (cartRef.current && !cartRef.current.contains(event.target as Node)) {
+        setShowCart(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [setShowCart]);
+
   return (
     <motion.div
       className={styles.cart}
@@ -21,16 +61,18 @@ const Cart = () => {
       animate="visible"
       initial="hidden"
       exit="exit"
-      //variants={cartSlide}
+      variants={cartVariants}
     >
-      <div className="cart-container__header">
-        <h2 className="cart-container__header__headline">Your cart</h2>
+      <div className={styles.header}>
         <button
-          className="cart-container__header__close-button"
+          className={styles.closeButton}
           onClick={() => setShowCart(false)}
         >
           <IoIosClose />
         </button>
+
+        <p className={styles.title}>Your cart</p>
+        <span></span>
       </div>
       <div className="cart-container__products_wrapper">
         {/* <AnimatePresence>
@@ -45,17 +87,18 @@ const Cart = () => {
           )}
         </AnimatePresence> */}
       </div>
-      {/* <div className="cart-container__footer">
-        <h2 className="cart-container__footer__total-price">Total: </h2>
-        <h2>£{totalPrice}</h2>
-        <button
-          className="cart-container__footer__pay-btn"
-          onClick={handleCheckout}
-        >
-          Proceed to checkout
-          <IoSend style={{ fontSize: "1.2rem" }} />
-        </button>
-      </div> */}
+      <div className={styles.checkout}>
+        <div className={styles.totalPrice}>
+          <p>Total:</p>
+          <p>£234</p>
+        </div>
+        <Button
+          className={styles.checkoutButton}
+          variant="primary"
+          icon={<IoSend />}
+          text="Proceed to checkout"
+        />
+      </div>
     </motion.div>
   );
 };
