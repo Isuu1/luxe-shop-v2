@@ -1,0 +1,12 @@
+.cart {
+  z-index: 99;
+  background: #fff;
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 15px -8px rgb(95, 95, 95);
+}

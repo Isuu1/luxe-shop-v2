@@ -42,11 +42,15 @@ import { FaUserAlt } from "react-icons/fa";
 import { FaBasketShopping } from "react-icons/fa6";
 import { AnimatePresence } from "framer-motion";
 import Search from "@/features/search/components/Search";
+import { useCartContext } from "@/shared/providers/CartProvider";
+import Cart from "@/features/cart/components/Cart";
 
 const Header = () => {
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
   //   const { showMenu, setShowMenu, userModal, loginPromptOpen, searchOpen } =
   //     useStateContext();
+
+  const { showCart, setShowCart } = useCartContext();
 
   // Get current path
   // const pathname = usePathname();
@@ -86,6 +90,7 @@ const Header = () => {
             closeSearch={() => setSearchOpen(false)}
           />
         )}
+        {showCart && <Cart />}
       </AnimatePresence>
 
       <div className={styles.left}>
@@ -116,7 +121,10 @@ const Header = () => {
           onClick={() => setSearchOpen(true)}
         />
         <FaUserAlt className={styles.item} />
-        <FaBasketShopping className={styles.item} />
+        <FaBasketShopping
+          className={styles.item}
+          onClick={() => setShowCart(true)}
+        />
         {/* <Link className={styles.item} href="/search">
           <IoSearch />
         {/* <AnimatePresence mode="wait">
