@@ -47,11 +47,11 @@ const Cart = () => {
         setShowCart(false);
       }
     };
-
-    document.addEventListener("click", handleClickOutside);
+    //Using pointerdown instead of click makes sure the event is caught before the element disappears
+    document.addEventListener("pointerdown", handleClickOutside);
 
     return () => {
-      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("pointerdown", handleClickOutside);
     };
   }, [setShowCart]);
 

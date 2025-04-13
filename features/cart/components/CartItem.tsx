@@ -23,7 +23,7 @@ interface CartItemProps {
 const CartItem: React.FC<CartItemProps> = ({ item }) => {
   console.log("item", item);
 
-  const { updateCartItemQuantity } = useCartContext();
+  const { updateCartItemQuantity, removeCartItem } = useCartContext();
   return (
     <div className={styles.cartItem}>
       <Image
@@ -55,7 +55,10 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
         </div>
       </div>
 
-      <MdRemoveShoppingCart className={styles.removeButton} />
+      <MdRemoveShoppingCart
+        className={styles.removeButton}
+        onClick={() => removeCartItem(item._id)}
+      />
     </div>
   );
 };
