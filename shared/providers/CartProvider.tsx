@@ -6,9 +6,6 @@ interface CartContextType {
   showCart: boolean;
   setShowCart: React.Dispatch<React.SetStateAction<boolean>>;
   cartItems: Product[];
-  setCartItems: React.Dispatch<React.SetStateAction<Product[]>>;
-  totalPrice: number;
-  setTotalPrice: React.Dispatch<React.SetStateAction<number>>;
   addToCart: (product: Product, quantity: number) => void;
   updateCartItemQuantity: (id: string, value: string) => void;
 }
@@ -18,42 +15,29 @@ const CartContext = createContext<CartContextType | null>(null);
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [showCart, setShowCart] = useState(false);
   const [cartItems, setCartItems] = useState<Product[]>([]);
-  const [totalPrice, setTotalPrice] = useState(0);
-  //const [totalQuantity, setTotalQuantity] = useState(0);
 
   useEffect(() => {
     //On component mount, check if there are items in local storage
     if (typeof window !== "undefined") {
       const intitalCartItems = localStorage.getItem("cartItems");
-      const initialTotalPrice = localStorage.getItem("totalPrice");
       setCartItems(intitalCartItems ? JSON.parse(intitalCartItems) : []);
-      setTotalPrice(initialTotalPrice ? parseFloat(initialTotalPrice) : 0);
     }
   }, []);
 
   useEffect(() => {
-    //On component mount, check if there are items in local storage
+    //Set new cart items to local storage on cartItems change
     if (typeof window !== "undefined") {
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
-      localStorage.setItem("totalPrice", JSON.stringify(totalPrice));
     }
-  }, [cartItems, totalPrice]);
-
-  console.log("cartItems", cartItems);
+  }, [cartItems]);
 
   const addToCart = (product: Product, quantity: number) => {
     const checkProductInCart = cartItems.find(
       (item) => item._id === product._id
     );
-    setTotalPrice(
-      (prevTotalPrice) => prevTotalPrice + product.price * quantity
-    );
-
-    //setTotalQuantity((prevQuantity) => prevQuantity + quantity);
-
     if (checkProductInCart) {
       //If you have product in cart and you choose to add the same product
-      //this will just increase the quantiy and total price insetad
+      //this will just increase the quantiy and total price instead
       const updatedCartItems = cartItems.map((cartItem) => {
         if (cartItem._id === product._id)
           return {
@@ -77,8 +61,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const updateCartItemQuantity = (id: string, value: string) => {
-    const productPrice = cartItems.find((item) => item._id === id)?.price || 0;
-
     const updatedCartItems = cartItems.map((item) => {
       if (item._id === id) {
         if (value === "increment") {
@@ -93,10 +75,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       return item;
     });
     setCartItems(updatedCartItems);
-    setTotalPrice(
-      (prevTotalPrice) =>
-        prevTotalPrice + (value === "increment" ? 1 : -1) * productPrice
-    );
   };
 
   return (
@@ -105,7 +83,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         showCart,
         setShowCart,
         cartItems,
-        totalPrice,
         addToCart,
         updateCartItemQuantity,
       }}
