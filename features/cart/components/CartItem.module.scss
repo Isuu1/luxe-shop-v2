@@ -1,0 +1,43 @@
+.cartItem {
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  padding: 1rem;
+  border-radius: 18px;
+  .image {
+    position: relative !important;
+    width: 40% !important;
+    aspect-ratio: 1/1;
+  }
+  .details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    .quantity {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      .button {
+        padding: 0;
+        background: transparent;
+        color: #6b37d1;
+        font-size: 1.4rem;
+      }
+      .inactive {
+        color: #5329a3;
+        cursor: not-allowed;
+      }
+    }
+  }
+  .removeButton {
+    margin-left: auto;
+    font-size: 1.6rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    &:hover {
+      color: #6b37d1;
+    }
+  }
+}

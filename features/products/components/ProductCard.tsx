@@ -12,6 +12,8 @@ import { Product } from "@/shared/types/product";
 //Icons
 import { FaStar } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import Button from "@/shared/components/ui/Button";
+import { useCartContext } from "@/shared/providers/CartProvider";
 
 export const productCardAnimation = {
   visible: {
@@ -39,6 +41,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const { addToCart } = useCartContext();
   const router = useRouter();
 
   return (
@@ -68,6 +71,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <span className={styles.number}>{product.stars}</span>
         </div>
       </div>
+      <Button text="Add to cart" onClick={() => addToCart(product, 1)} />
     </motion.div>
   );
 };

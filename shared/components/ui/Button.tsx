@@ -4,12 +4,13 @@ import React from "react";
 import styles from "./Button.module.scss";
 
 interface ButtonProps {
-  text: string;
+  text?: string;
   icon?: React.ReactNode;
   iconPosition?: "left" | "right";
   variant?: "primary" | "secondary";
   className?: string;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -19,6 +20,7 @@ const Button: React.FC<ButtonProps> = ({
   variant,
   className,
   onClick,
+  disabled,
 }) => {
   return (
     <button
@@ -28,6 +30,7 @@ const Button: React.FC<ButtonProps> = ({
         gap: icon ? "0.5rem" : "0",
       }}
       onClick={onClick}
+      disabled={disabled}
     >
       <span className={styles.icon}>{icon}</span>
       {text}
