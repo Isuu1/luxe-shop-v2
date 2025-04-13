@@ -1,0 +1,32 @@
+.inputContainer {
+  position: relative;
+  .input {
+    padding: 0.3rem 0.3rem 0.3rem 1.7rem;
+    width: 100%;
+    background: #fff;
+    border-radius: 14px;
+    outline: none;
+    border: 2px solid hsla(0, 0%, 89%, 0.192);
+  }
+  .icon {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    left: 5px;
+    font-size: 1.2rem;
+    & svg {
+      //Remove extra space
+      display: block;
+    }
+  }
+  .clearButton {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 5px;
+    font-size: 1.1rem;
+    //Remove extra space
+    display: block;
+    cursor: pointer;
+  }
+}
