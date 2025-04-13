@@ -1,0 +1,34 @@
+.about {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  font-size: 1rem;
+  .mainImage {
+    position: relative !important;
+  }
+  .section {
+    line-height: 1.5rem;
+    .title {
+      margin-bottom: 1rem;
+    }
+    .list {
+      list-style: none;
+      line-height: 1.5rem;
+    }
+    .teamMembers {
+      display: flex;
+      margin-top: 2.5rem;
+      justify-content: center;
+      gap: 2rem;
+      .member {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        .image {
+          border-radius: 14px;
+        }
+      }
+    }
+  }
+}
