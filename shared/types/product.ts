@@ -10,6 +10,7 @@ export type Product = {
   price: number;
   stars: number;
   ratings: number;
+  quantity: number;
   images: SanityImageSource[];
   categories: Category[];
   slug: {
