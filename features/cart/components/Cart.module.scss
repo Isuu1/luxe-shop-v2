@@ -8,6 +8,7 @@
   max-width: 400px;
   display: grid;
   grid-template-rows: auto 1fr auto;
+  gap: 1rem;
   box-shadow: 0 0 15px -8px rgb(95, 95, 95);
   padding: 1rem;
   .header {
@@ -31,6 +32,18 @@
     }
     .title {
       font-weight: 700;
+    }
+  }
+  .items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow: auto;
+    //Hide scrollbar
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    &::-webkit-scrollbar {
+      display: none;
     }
   }
   .checkout {
