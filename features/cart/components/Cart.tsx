@@ -14,6 +14,7 @@ import { useCartContext } from "@/shared/providers/CartProvider";
 //Components
 import Button from "@/shared/components/ui/Button";
 import CartItem from "./CartItem";
+import { calculateAllQuantities, calculateTotalPrice } from "../lib/utils";
 
 export const cartVariants = {
   visible: {
@@ -71,23 +72,9 @@ const Cart = () => {
     };
   }, [setShowCart]);
 
-  const calculateTotalPrice = () => {
-    let total = 0;
-    cartItems.forEach((item) => {
-      total += item.price * item.quantity;
-    });
-    return total;
-  };
-  const totalPrice = calculateTotalPrice();
+  const totalPrice = calculateTotalPrice(cartItems);
 
-  const calculateAllQuantities = () => {
-    let total = 0;
-    cartItems.forEach((item) => {
-      total += item.quantity;
-    });
-    return total;
-  };
-  const totalQuantities = calculateAllQuantities();
+  const totalQuantities = calculateAllQuantities(cartItems);
 
   return (
     <motion.div
