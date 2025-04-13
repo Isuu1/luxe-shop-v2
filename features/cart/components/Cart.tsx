@@ -39,7 +39,7 @@ export const cartVariants = {
 const Cart = () => {
   const cartRef = useRef<HTMLDivElement>(null);
 
-  const { setShowCart, totalPrice, cartItems } = useCartContext();
+  const { setShowCart, cartItems } = useCartContext();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -54,6 +54,15 @@ const Cart = () => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, [setShowCart]);
+
+  const calculateTotalPrice = () => {
+    let total = 0;
+    cartItems.forEach((item) => {
+      total += item.price * item.quantity;
+    });
+    return total;
+  };
+  const totalPrice = calculateTotalPrice();
 
   return (
     <motion.div
