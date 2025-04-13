@@ -1,0 +1,15 @@
+.headline {
+  margin: 1rem 0;
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  & svg {
+    font-size: 2rem;
+    display: block;
+    background: #5329a3;
+    color: #fff;
+    border-radius: 8px;
+    padding: 0.2rem;
+  }
+}
