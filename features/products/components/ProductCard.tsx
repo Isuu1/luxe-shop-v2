@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 //Animations
 import { motion } from "framer-motion";
@@ -11,9 +12,9 @@ import { urlFor } from "@/sanity/lib/image";
 import { Product } from "@/shared/types/product";
 //Icons
 import { FaStar } from "react-icons/fa";
-import { useRouter } from "next/navigation";
-import Button from "@/shared/components/ui/Button";
-import { useCartContext } from "@/shared/providers/CartProvider";
+
+//Components
+import ProductCardOverlay from "./ProductCardOverlay";
 
 export const productCardAnimation = {
   visible: {
@@ -41,7 +42,6 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const { addToCart } = useCartContext();
   const router = useRouter();
 
   return (
@@ -54,6 +54,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       exit="exit"
       onClick={() => router.push(`/product/${product.slug.current}`)}
     >
+      <ProductCardOverlay product={product} />
       <Image
         className={styles.image}
         src={urlFor(product.images && product.images[0]).toString()}
@@ -71,7 +72,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <span className={styles.number}>{product.stars}</span>
         </div>
       </div>
-      <Button text="Add to cart" onClick={() => addToCart(product, 1)} />
     </motion.div>
   );
 };

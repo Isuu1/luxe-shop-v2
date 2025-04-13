@@ -1,0 +1,14 @@
+.overlay {
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: transparent;
+  padding: 1rem;
+  .button {
+    padding: 0;
+    font-size: 1.8rem;
+  }
+}

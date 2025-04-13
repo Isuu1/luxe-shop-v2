@@ -9,7 +9,7 @@ interface ButtonProps {
   iconPosition?: "left" | "right";
   variant?: "primary" | "secondary";
   className?: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent) => void;
   disabled?: boolean;
 }
 
