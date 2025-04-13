@@ -1,0 +1,11 @@
+.bestsellers {
+  overflow: hidden;
+  .container {
+    display: flex;
+    gap: 0.5rem;
+    .item {
+      flex: 0 0 35%;
+      min-width: 0;
+    }
+  }
+}
