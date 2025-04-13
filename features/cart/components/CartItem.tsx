@@ -32,8 +32,6 @@ const cartItemVariants = {
 };
 
 const CartItem: React.FC<CartItemProps> = ({ item }) => {
-  console.log("item", item);
-
   const { updateCartItemQuantity, removeCartItem } = useCartContext();
   return (
     <motion.div
