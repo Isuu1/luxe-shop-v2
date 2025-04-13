@@ -15,17 +15,32 @@ import Button from "@/shared/components/ui/Button";
 import { useCartContext } from "@/shared/providers/CartProvider";
 //Types
 import { Product } from "@/shared/types/product";
+//Animations
+import { motion } from "framer-motion";
 
 interface CartItemProps {
   item: Product;
 }
+
+const cartItemVariants = {
+  exit: {
+    x: 500,
+    transition: {
+      duration: 0.2,
+    },
+  },
+};
 
 const CartItem: React.FC<CartItemProps> = ({ item }) => {
   console.log("item", item);
 
   const { updateCartItemQuantity, removeCartItem } = useCartContext();
   return (
-    <div className={styles.cartItem}>
+    <motion.div
+      className={styles.cartItem}
+      variants={cartItemVariants}
+      exit="exit"
+    >
       <Image
         fill
         src={urlFor(item.images[0]).toString()}
@@ -59,7 +74,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
         className={styles.removeButton}
         onClick={() => removeCartItem(item._id)}
       />
-    </div>
+    </motion.div>
   );
 };
 

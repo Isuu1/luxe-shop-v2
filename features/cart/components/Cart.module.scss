@@ -5,7 +5,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  max-width: 400px;
+  width: 400px;
   display: grid;
   grid-template-rows: auto 1fr auto;
   gap: 1rem;
@@ -44,6 +44,12 @@
     scrollbar-width: none; /* Firefox */
     &::-webkit-scrollbar {
       display: none;
+    }
+    .empty {
+      margin: 2rem auto;
+      line-height: 2rem;
+      text-align: center;
+      font-size: 1rem;
     }
   }
   .checkout {

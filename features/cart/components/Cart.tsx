@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from "react";
 
 //Animations
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 //Styles
 import styles from "./Cart.module.scss";
 //Icons
@@ -32,6 +32,22 @@ export const cartVariants = {
     x: 400,
     transition: {
       duration: 0.2,
+    },
+  },
+};
+
+const emptyCartVariants = {
+  hidden: {
+    opacity: 0,
+    transition: {
+      duration: 0.2,
+    },
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: 0.2,
+      delay: 0.2,
     },
   },
 };
@@ -94,15 +110,21 @@ const Cart = () => {
         <span></span>
       </div>
       <div className={styles.items}>
-        {/* <AnimatePresence> */}
-        {cartItems.length > 0 ? (
-          cartItems?.map((item) => <CartItem key={item._id} item={item} />)
-        ) : (
-          <div className="cart-container__empty-basket-msg">
-            <h2>No items yet</h2>
-          </div>
-        )}
-        {/* </AnimatePresence> */}
+        <AnimatePresence>
+          {cartItems.length > 0 &&
+            cartItems?.map((item) => <CartItem key={item._id} item={item} />)}
+          {cartItems.length === 0 && (
+            <motion.div
+              className={styles.empty}
+              variants={emptyCartVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <h2>Your cart is empty</h2>
+              <p>Looks like you haven’t added anything yet.</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
       <div className={styles.checkout}>
         <div className={styles.totalPrice}>
