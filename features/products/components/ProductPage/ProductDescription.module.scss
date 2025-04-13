@@ -27,6 +27,46 @@
     color: #555;
     line-height: 1.5rem;
   }
+  .addToCart {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: #6b37d1;
+    border-radius: 15px;
+    padding: 0.8rem;
+    margin-right: auto;
+    .quantity {
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.4rem;
+      .button {
+        font-size: 1.3rem;
+        padding: 0.5rem;
+        & svg {
+          border-radius: 20px;
+          color: #fff;
+        }
+      }
+      .inactive {
+        cursor: not-allowed;
+        & svg {
+          color: #d3d3d3 !important;
+        }
+      }
+    }
+    .addToCartButton {
+      background: transparent !important;
+      padding: 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+      gap: 1rem !important;
+      & svg {
+        font-size: 1.3rem;
+      }
+    }
+  }
 }
 
 .ratingIcon {
