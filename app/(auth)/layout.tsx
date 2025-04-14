@@ -1,3 +1,4 @@
+import AuthLayoutWrapper from "@/features/auth/components/AuthLayoutWrapper";
 import { createClient } from "@/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -13,10 +14,5 @@ export default async function Layout({
     redirect("/");
   }
 
-  return (
-    <div className="auth-layout">
-      <div style={{ flex: "0 1 50%" }}></div>
-      {children}
-    </div>
-  );
+  return <AuthLayoutWrapper>{children}</AuthLayoutWrapper>;
 }
