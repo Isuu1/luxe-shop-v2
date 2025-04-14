@@ -10,3 +10,26 @@
     font-weight: 700;
   }
 }
+
+.loadingIcon {
+  aspect-ratio: 1/1;
+  &::after {
+    content: "";
+    display: block;
+    height: 6px;
+    aspect-ratio: 1/1;
+    border: 5px solid #ffffff;
+    border-radius: 50%;
+    border-color: #ffffff transparent #ffffff transparent;
+    animation: rotateSpin 1s linear infinite;
+  }
+}
+
+@keyframes rotateSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
