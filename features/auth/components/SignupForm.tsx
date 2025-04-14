@@ -13,9 +13,10 @@ import { FaUnlock } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
 import Button from "@/shared/components/ui/Button";
 import { SignupFormState } from "../types/forms";
-import { signup } from "../actions/auth";
+import { signup } from "../lib/actions/auth";
 import AuthError from "./AuthError";
 import { normalizeErrors } from "../lib/utils";
+import { useRouter } from "next/navigation";
 
 const initialState: SignupFormState = {
   success: false,
@@ -30,13 +31,20 @@ const SignupForm = () => {
 
   const [error, setError] = useState<string[] | null>(null);
 
-  console.log(state);
+  const router = useRouter();
 
   useEffect(() => {
     if (state.error) {
       setError(normalizeErrors(state.error));
     }
   }, [state.error, state.resetKey]);
+
+  useEffect(() => {
+    if (state.success) {
+      setError(null);
+      router.push(`/signup/success?email=${state.data.email}`);
+    }
+  }, [state.success, state.resetKey, router, state.data.email]);
 
   return (
     <div className={styles.signupForm}>

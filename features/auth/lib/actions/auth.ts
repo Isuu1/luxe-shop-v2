@@ -1,8 +1,8 @@
 "use server";
 
 import { createClient } from "@/supabase/server";
-import { SignupFormState } from "../types/forms";
-import { signupSchema } from "../schemas/signup";
+import { SignupFormState } from "../../types/forms";
+import { signupSchema } from "../../schemas/signup";
 
 export async function signup(prevState: SignupFormState, formData: FormData) {
   const email = formData.get("email") as string;
