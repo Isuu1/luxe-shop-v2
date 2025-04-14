@@ -1,22 +1,25 @@
 "use client";
 
-import Form from "@/shared/components/ui/Form";
-import Input from "@/shared/components/ui/Input";
 import React, { useActionState, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 //Styles
 import styles from "./SignupForm.module.scss";
-
 //Icons
 import { FaUser } from "react-icons/fa";
 import { FaUnlock } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
+//Components
 import Button from "@/shared/components/ui/Button";
-import { SignupFormState } from "../types/forms";
-import { signup } from "../lib/actions/auth";
+import Form from "@/shared/components/ui/Form";
+import Input from "@/shared/components/ui/Input";
 import AuthError from "./AuthError";
+//Types
+import { SignupFormState } from "../types/forms";
+//Actions
+import { signup } from "../lib/actions/auth";
+//Utils
 import { normalizeErrors } from "../lib/utils";
-import { useRouter } from "next/navigation";
 
 const initialState: SignupFormState = {
   success: false,
@@ -79,7 +82,7 @@ const SignupForm = () => {
             isPending ? <div className={styles.loadingIcon}></div> : <IoSend />
           }
           type="submit"
-          disabled={isPending}
+          disabled={isPending || state.success}
         />
       </Form>
     </div>
