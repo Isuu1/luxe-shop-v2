@@ -1,7 +1,7 @@
 "use server";
 
 import { createClient } from "@/supabase/server";
-import { SignupFormState } from "../../types/forms";
+import { LoginFormState, SignupFormState } from "../../types/forms";
 import { signupSchema } from "../../schemas/signup";
 
 export async function signup(prevState: SignupFormState, formData: FormData) {
@@ -63,6 +63,62 @@ export async function signup(prevState: SignupFormState, formData: FormData) {
           favourites: [],
         },
       },
+    });
+
+    if (error) {
+      return {
+        error: error.message,
+        success: false,
+        data,
+        status: 400,
+        resetKey: Date.now(),
+      };
+    }
+
+    return {
+      success: true,
+      data,
+      error: null,
+      status: 200,
+      resetKey: Date.now(),
+    };
+  } catch (error) {
+    console.error("Error signing up:", error);
+    return {
+      success: false,
+      data,
+      error: error as string,
+      status: 500,
+      resetKey: Date.now(),
+    };
+  }
+}
+
+export async function login(prevState: LoginFormState, formData: FormData) {
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+
+  const data = {
+    email: email,
+    password: password,
+  };
+
+  if (!email || !password) {
+    return {
+      error: "Please fill in all fields",
+      success: false,
+      data,
+      status: 400,
+      resetKey: Date.now(),
+    };
+  }
+
+  try {
+    const supabase = await createClient();
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email: data.email,
+      password: data.password,
     });
 
     if (error) {
