@@ -7,5 +7,5 @@ export type SignupFormState = {
     confirmPassword: string | "";
   };
   status: number;
-  //resetKey?: number;
+  resetKey?: number;
 };

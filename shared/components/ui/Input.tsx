@@ -13,6 +13,7 @@ interface InputProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
   ref?: React.Ref<HTMLInputElement>;
+  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -26,6 +27,7 @@ const Input: React.FC<InputProps> = ({
   onChange,
   className,
   ref,
+  onFocus,
 }) => {
   return (
     <div className={styles.inputContainer}>
@@ -41,6 +43,7 @@ const Input: React.FC<InputProps> = ({
           type={type}
           onChange={onChange}
           className={`${styles.input} ${className}`}
+          onFocus={onFocus}
         />
         <span className={styles.icon}>{icon}</span>
         <div className={styles.clearButton}>{clearButton}</div>

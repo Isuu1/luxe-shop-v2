@@ -20,6 +20,7 @@ export async function signup(prevState: SignupFormState, formData: FormData) {
       success: false,
       data,
       status: 400,
+      resetKey: Date.now(),
     };
   }
 
@@ -30,6 +31,7 @@ export async function signup(prevState: SignupFormState, formData: FormData) {
       success: false,
       data,
       status: 400,
+      resetKey: Date.now(),
     };
   }
 
@@ -55,6 +57,7 @@ export async function signup(prevState: SignupFormState, formData: FormData) {
         success: false,
         data,
         status: 400,
+        resetKey: Date.now(),
       };
     }
 
@@ -63,6 +66,7 @@ export async function signup(prevState: SignupFormState, formData: FormData) {
       data,
       error: null,
       status: 200,
+      resetKey: Date.now(),
     };
   } catch (error) {
     console.error("Error signing up:", error);
@@ -71,6 +75,7 @@ export async function signup(prevState: SignupFormState, formData: FormData) {
       data,
       error: error as string,
       status: 500,
+      resetKey: Date.now(),
     };
   }
 }
