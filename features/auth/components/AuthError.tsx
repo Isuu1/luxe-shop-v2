@@ -22,7 +22,7 @@ export const errorVariants = {
 };
 
 interface AuthErrorProps {
-  error: string | null;
+  error: string[] | null;
 }
 
 const AuthError: React.FC<AuthErrorProps> = ({ error }) => {
@@ -33,10 +33,13 @@ const AuthError: React.FC<AuthErrorProps> = ({ error }) => {
       initial="hidden"
       animate="visible"
     >
-      <p className={styles.errorMessage}>
-        <MdOutlineError className={styles.icon} />
-        {error}
-      </p>
+      {error &&
+        error.map((err, index) => (
+          <p key={index} className={styles.errorMessage}>
+            <MdOutlineError className={styles.icon} />
+            {err}
+          </p>
+        ))}
     </motion.div>
   );
 };

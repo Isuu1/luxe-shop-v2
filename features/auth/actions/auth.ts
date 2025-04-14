@@ -2,6 +2,7 @@
 
 import { createClient } from "@/supabase/server";
 import { SignupFormState } from "../types/forms";
+import { signupSchema } from "../schemas/signup";
 
 export async function signup(prevState: SignupFormState, formData: FormData) {
   const email = formData.get("email") as string;
@@ -17,6 +18,19 @@ export async function signup(prevState: SignupFormState, formData: FormData) {
   if (!email || !password || !confirmPassword) {
     return {
       error: "Please fill in all fields",
+      success: false,
+      data,
+      status: 400,
+      resetKey: Date.now(),
+    };
+  }
+
+  const validateSignupData = signupSchema.safeParse(data);
+
+  //Return data along with error message to to able to set email as default value (prevent clearing the input)
+  if (!validateSignupData.success) {
+    return {
+      error: validateSignupData.error.format(),
       success: false,
       data,
       status: 400,

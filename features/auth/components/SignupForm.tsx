@@ -15,6 +15,7 @@ import Button from "@/shared/components/ui/Button";
 import { SignupFormState } from "../types/forms";
 import { signup } from "../actions/auth";
 import AuthError from "./AuthError";
+import { normalizeErrors } from "../lib/utils";
 
 const initialState: SignupFormState = {
   success: false,
@@ -27,13 +28,13 @@ const initialState: SignupFormState = {
 const SignupForm = () => {
   const [state, formAction, isPending] = useActionState(signup, initialState);
 
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string[] | null>(null);
 
   console.log(state);
 
   useEffect(() => {
     if (state.error) {
-      setError(state.error);
+      setError(normalizeErrors(state.error));
     }
   }, [state.error, state.resetKey]);
 
@@ -61,6 +62,7 @@ const SignupForm = () => {
           icon={<FaUnlock />}
           onFocus={() => setError(null)}
         />
+        {error && <AuthError error={error} />}
         <Button
           className={styles.button}
           variant="primary"
@@ -71,7 +73,6 @@ const SignupForm = () => {
           type="submit"
           disabled={isPending}
         />
-        {error && <AuthError error={error} />}
       </Form>
     </div>
   );
