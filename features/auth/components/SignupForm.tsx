@@ -20,6 +20,7 @@ import { SignupFormState } from "../types/forms";
 import { signup } from "../lib/actions/auth";
 //Utils
 import { normalizeErrors } from "../lib/utils";
+import LoadingIcon from "@/shared/components/LoadingIcon";
 
 const initialState: SignupFormState = {
   success: false,
@@ -78,9 +79,7 @@ const SignupForm = () => {
           className={styles.button}
           variant="primary"
           text={isPending ? "Creating account..." : "Create account"}
-          icon={
-            isPending ? <div className={styles.loadingIcon}></div> : <IoSend />
-          }
+          icon={isPending ? <LoadingIcon /> : <IoSend />}
           type="submit"
           disabled={isPending || state.success}
         />

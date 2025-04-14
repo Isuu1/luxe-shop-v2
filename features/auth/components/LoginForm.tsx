@@ -22,6 +22,7 @@ import { LoginFormState } from "../types/forms";
 import { login } from "../lib/actions/auth";
 //Utils
 import { normalizeErrors } from "../lib/utils";
+import LoadingIcon from "@/shared/components/LoadingIcon";
 
 const initialState: LoginFormState = {
   success: false,
@@ -76,9 +77,7 @@ const LoginForm = () => {
           className={styles.button}
           variant="primary"
           text={isPending ? "Logging in..." : "Login"}
-          icon={
-            isPending ? <div className={styles.loadingIcon}></div> : <IoSend />
-          }
+          icon={isPending ? <LoadingIcon /> : <IoSend />}
           type="submit"
           disabled={isPending || state.success}
         />
