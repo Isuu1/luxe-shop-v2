@@ -57,6 +57,9 @@ const LoginForm = () => {
 
   return (
     <div className={styles.loginForm}>
+      <p className={styles.headline}>
+        Manage your profile, access your wishlist and saved items.
+      </p>
       <Form action={formAction}>
         <Input
           id="email"

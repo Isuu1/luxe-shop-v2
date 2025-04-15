@@ -9,5 +9,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    gap: 3rem;
+    .logo {
+      color: #5329a3;
+    }
   }
 }

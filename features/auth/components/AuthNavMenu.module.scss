@@ -1,0 +1,27 @@
+.authNavMenu {
+  position: relative;
+  display: flex;
+  list-style: none;
+  background: #f5f5f5;
+  border-radius: 14px;
+  width: fit-content;
+  & button {
+    padding: 0.7rem 1rem;
+    font-weight: 700;
+    border-radius: 14px;
+  }
+  .item {
+    z-index: 2;
+    position: relative;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .active {
+      background: #6b37d1;
+      color: #fff;
+    }
+  }
+}
