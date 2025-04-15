@@ -11,6 +11,8 @@ import { toastStyle } from "@/shared/styles/toast";
 import { FaUser } from "react-icons/fa";
 import { FaUnlock } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
+import { FaEye } from "react-icons/fa";
+
 //Components
 import Button from "@/shared/components/ui/Button";
 import Form from "@/shared/components/ui/Form";
@@ -74,6 +76,7 @@ const LoginForm = () => {
           label="Password"
           icon={<FaUnlock />}
           onFocus={() => setError(null)}
+          showPasswordIcon={<FaEye />}
         />
         {error && <AuthError error={error} />}
         <Button

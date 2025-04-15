@@ -32,6 +32,17 @@
         display: block;
       }
     }
+    .showPasswordIcon {
+      position: absolute;
+      top: 50%;
+      transform: translate(0, -50%);
+      right: 8px;
+      font-size: 1.2rem;
+      & svg {
+        //Remove extra space
+        display: block;
+      }
+    }
     .clearButton {
       position: absolute;
       top: 50%;

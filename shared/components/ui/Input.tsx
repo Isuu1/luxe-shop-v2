@@ -9,6 +9,7 @@ interface InputProps {
   type: string;
   id: string;
   icon?: React.ReactNode;
+  showPasswordIcon?: React.ReactNode;
   clearButton?: React.ReactNode;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
@@ -23,6 +24,7 @@ const Input: React.FC<InputProps> = ({
   type,
   id,
   icon,
+  showPasswordIcon,
   clearButton,
   onChange,
   className,
@@ -46,6 +48,7 @@ const Input: React.FC<InputProps> = ({
           onFocus={onFocus}
         />
         <span className={styles.icon}>{icon}</span>
+        <span className={styles.showPasswordIcon}>{showPasswordIcon}</span>
         <div className={styles.clearButton}>{clearButton}</div>
       </div>
     </div>
