@@ -3,6 +3,7 @@ import React from "react";
 //Styles
 import styles from "@/features/auth/components/AuthLayoutWrapper.module.scss";
 import AuthNavMenu from "./AuthNavMenu";
+import SocialAuthProviders from "./SocialAuthProviders";
 
 const AuthLayoutWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -12,6 +13,7 @@ const AuthLayoutWrapper = ({ children }: { children: React.ReactNode }) => {
         <AuthNavMenu />
         <h1 className={styles.logo}>luxe.</h1>
         {children}
+        <SocialAuthProviders />
       </div>
     </div>
   );
