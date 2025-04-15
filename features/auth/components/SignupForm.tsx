@@ -9,6 +9,8 @@ import styles from "./SignupForm.module.scss";
 import { FaUser } from "react-icons/fa";
 import { FaUnlock } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 //Components
 import Button from "@/shared/components/ui/Button";
 import Form from "@/shared/components/ui/Form";
@@ -34,6 +36,8 @@ const SignupForm = () => {
   const [state, formAction, isPending] = useActionState(signup, initialState);
 
   const [error, setError] = useState<string[] | null>(null);
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const router = useRouter();
 
@@ -65,14 +69,21 @@ const SignupForm = () => {
         />
         <Input
           id="password"
-          type="password"
+          type={showPassword ? "text" : "password"}
           label="Password"
           icon={<FaUnlock />}
           onFocus={() => setError(null)}
+          showPasswordIcon={
+            showPassword ? (
+              <FaEye onClick={() => setShowPassword(false)} />
+            ) : (
+              <FaEyeSlash onClick={() => setShowPassword(true)} />
+            )
+          }
         />
         <Input
           id="confirmPassword"
-          type="password"
+          type={showPassword ? "text" : "password"}
           label="Confirm password"
           icon={<FaUnlock />}
           onFocus={() => setError(null)}

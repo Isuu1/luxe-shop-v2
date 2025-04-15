@@ -33,11 +33,12 @@
       }
     }
     .showPasswordIcon {
+      cursor: pointer;
       position: absolute;
       top: 50%;
       transform: translate(0, -50%);
       right: 8px;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       & svg {
         //Remove extra space
         display: block;
