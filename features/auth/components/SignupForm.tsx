@@ -11,6 +11,7 @@ import { FaUnlock } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
+import { IoMdMail } from "react-icons/io";
 //Components
 import Button from "@/shared/components/ui/Button";
 import Form from "@/shared/components/ui/Form";
@@ -26,7 +27,7 @@ import LoadingIcon from "@/shared/components/LoadingIcon";
 
 const initialState: SignupFormState = {
   success: false,
-  data: { email: "", password: "", confirmPassword: "" },
+  data: { email: "", username: "", password: "", confirmPassword: "" },
   error: null,
   status: 0,
   resetKey: Date.now(),
@@ -64,9 +65,17 @@ const SignupForm = () => {
           id="email"
           type="email"
           label="Email"
-          icon={<FaUser />}
+          icon={<IoMdMail />}
           onFocus={() => setError(null)}
           placeholder="luxe@email.com"
+        />
+        <Input
+          id="username"
+          type="text"
+          label="Username"
+          icon={<FaUser />}
+          onFocus={() => setError(null)}
+          placeholder="JohnDoe"
         />
         <Input
           id="password"
