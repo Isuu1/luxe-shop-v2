@@ -13,6 +13,10 @@
   .icon svg {
     display: block;
   }
+  &:disabled {
+    cursor: not-allowed;
+    background: #5329a3;
+  }
 }
 
 .primary {

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Footer from "@/shared/components/Footer";
 import { Toaster } from "react-hot-toast";
 //Fonts
 import { Rubik } from "next/font/google";
@@ -26,7 +25,6 @@ export default function RootLayout({
       <body className={`${rubik.className}`}>
         {children}
         <Toaster />
-        <Footer />
       </body>
     </html>
   );

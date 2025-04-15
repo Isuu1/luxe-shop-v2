@@ -1,0 +1,18 @@
+.authLayout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  .background {
+    background: #6b37d1;
+  }
+  .formContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 3rem;
+    .logo {
+      color: #5329a3;
+    }
+  }
+}
