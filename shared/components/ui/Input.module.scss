@@ -16,6 +16,10 @@
       border-radius: 14px;
       outline: none;
       border: 2px solid hsla(0, 0%, 89%, 0.192);
+      transition: border 0.2s ease-in-out;
+      &:focus {
+        border: 2px solid #6b37d1;
+      }
     }
     .icon {
       position: absolute;
