@@ -8,7 +8,7 @@ import BackLink from "@/shared/components/BackLink";
 const UserLayoutWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className={styles.userLayout}>
-      <BackLink previousPage="Account" />
+      <BackLink />
       <div className={styles.innerWrapper}>
         <UserNavMenu />
         {children}
