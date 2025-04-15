@@ -15,6 +15,7 @@ interface InputProps {
   className?: string;
   ref?: React.Ref<HTMLInputElement>;
   onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  defaultValue?: string;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -30,6 +31,7 @@ const Input: React.FC<InputProps> = ({
   className,
   ref,
   onFocus,
+  defaultValue,
 }) => {
   return (
     <div className={styles.inputContainer}>
@@ -46,6 +48,7 @@ const Input: React.FC<InputProps> = ({
           onChange={onChange}
           className={`${styles.input} ${className}`}
           onFocus={onFocus}
+          defaultValue={defaultValue}
         />
         <span className={styles.icon}>{icon}</span>
         <span className={styles.showPasswordIcon}>{showPasswordIcon}</span>

@@ -1,0 +1,12 @@
+.userLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  min-height: 100vh;
+  padding-top: 120px;
+  .innerWrapper {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 3rem;
+  }
+}
