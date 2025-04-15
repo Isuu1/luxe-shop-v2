@@ -52,6 +52,9 @@ const SignupForm = () => {
 
   return (
     <div className={styles.signupForm}>
+      <p className={styles.subHeadline}>
+        Track orders, create wishlists, and manage returns easily.
+      </p>
       <Form action={formAction}>
         <Input
           id="email"
