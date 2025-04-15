@@ -4,10 +4,14 @@ export type SignupFormState = {
   error:
     | string
     | null
-    | ZodFormattedError<{ email: string; password: string }, string>;
+    | ZodFormattedError<
+        { email: string; username: string; password: string },
+        string
+      >;
   success: boolean;
   data: {
     email: string | "";
+    username: string | "";
     password: string | "";
     confirmPassword: string | "";
   };

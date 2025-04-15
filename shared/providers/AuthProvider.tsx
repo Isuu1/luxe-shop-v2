@@ -2,12 +2,13 @@
 
 import { createClient } from "@/supabase/client";
 import { User } from "@supabase/supabase-js";
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 interface AuthContextType {
   isLoading: boolean;
   user: User | null;
-  email: string | null;
+  email: string | "";
+  username: string | "";
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);
@@ -19,6 +20,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   //User data from profiles table
   const [email, setEmail] = useState<string | "">("");
+  const [username, setUsername] = useState<string | "">("");
 
   const supabase = createClient();
 
@@ -37,7 +39,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         // Fetch the user's profile data from the Profiles table
         const { data: profileData, error: profileError } = await supabase
           .from("profiles")
-          .select("email, avatar")
+          .select("email, username, avatar")
           .eq("id", authData.user.id)
           .single();
 
@@ -45,9 +47,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         if (profileError) {
           console.error("Error fetching profile data:", profileError);
           setEmail("");
+          setUsername("");
           return; // Exit after setting auth user but clearing profile
         }
         setEmail(profileData?.email || "");
+        setUsername(profileData?.username || "");
       } catch (error) {
         console.error("Error fetching user:", error);
       } finally {
@@ -58,15 +62,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, [supabase]);
 
   return (
-    <AuthContext.Provider value={{ isLoading, user, email }}>
+    <AuthContext.Provider value={{ isLoading, user, email, username }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
 export const useAuth = () => {
-  const context = React.useContext(AuthContext);
-  if (context === undefined) {
+  const context = useContext(AuthContext);
+  if (!context) {
     throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;

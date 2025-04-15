@@ -5,17 +5,19 @@ import { LoginFormState, SignupFormState } from "../../types/forms";
 import { signupSchema } from "../../schemas/signup";
 
 export async function signup(prevState: SignupFormState, formData: FormData) {
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
-  const confirmPassword = formData.get("confirmPassword") as string;
-
   const data = {
-    email: email,
-    password: password,
-    confirmPassword: confirmPassword,
+    email: formData.get("email") as string,
+    username: formData.get("username") as string,
+    password: formData.get("password") as string,
+    confirmPassword: formData.get("confirmPassword") as string,
   };
 
-  if (!email || !password || !confirmPassword) {
+  if (
+    !data.username ||
+    !data.email ||
+    !data.password ||
+    !data.confirmPassword
+  ) {
     return {
       error: "Please fill in all fields",
       success: false,
@@ -39,7 +41,7 @@ export async function signup(prevState: SignupFormState, formData: FormData) {
   }
 
   //Check if passwords match
-  if (password !== confirmPassword) {
+  if (data.password !== data.confirmPassword) {
     return {
       error: "Passwords do not match",
       success: false,
@@ -59,6 +61,7 @@ export async function signup(prevState: SignupFormState, formData: FormData) {
       options: {
         data: {
           email: data.email,
+          username: data.username,
           avatar: "",
           wishlist: [],
         },

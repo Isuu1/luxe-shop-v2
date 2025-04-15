@@ -42,9 +42,7 @@ export const userModalVariants = {
 };
 
 const UserModalMenu = () => {
-  const auth = useAuth();
-  const user = auth?.user;
-  const email = auth?.email;
+  const { email, user, username } = useAuth();
 
   const userModalRef = useRef<HTMLDivElement>(null);
 
@@ -98,7 +96,7 @@ const UserModalMenu = () => {
                 height={60}
               />
             </div>
-            <p className={styles.username}>User</p>
+            <p className={styles.username}>{username}</p>
             <em className={styles.email}>{email}</em>
             <nav className={styles.menu}>
               {user && (
