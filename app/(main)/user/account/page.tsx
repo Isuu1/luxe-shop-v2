@@ -1,3 +1,9 @@
+import UpdateDetails from "@/features/user/components/UpdateDetails";
+
 export default function Page() {
-  return <div>User account page</div>;
+  return (
+    <div>
+      <UpdateDetails />
+    </div>
+  );
 }

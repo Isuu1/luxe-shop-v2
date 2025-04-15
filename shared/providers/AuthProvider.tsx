@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           setEmail("");
           return; // Exit after setting auth user but clearing profile
         }
-        setEmail(profileData?.email || null);
+        setEmail(profileData?.email || "");
       } catch (error) {
         console.error("Error fetching user:", error);
       } finally {
