@@ -14,8 +14,7 @@ import Form from "@/shared/components/ui/Form";
 import Input from "@/shared/components/ui/Input";
 
 const UpdateDetails = () => {
-  const auth = useAuth();
-  const email = auth?.email || "";
+  const { email, username } = useAuth();
 
   return (
     <div>
@@ -27,7 +26,13 @@ const UpdateDetails = () => {
           icon={<IoMdMail />}
           defaultValue={email}
         />
-        <Input label="Username" id="username" type="text" icon={<FaUser />} />
+        <Input
+          label="Username"
+          id="username"
+          type="text"
+          icon={<FaUser />}
+          defaultValue={username}
+        />
         <Button
           variant="primary"
           text="Update details"
