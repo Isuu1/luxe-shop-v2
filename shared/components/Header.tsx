@@ -37,13 +37,14 @@ import { IoPeople } from "react-icons/io5";
 import { BiSupport } from "react-icons/bi";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 
-import { FaUserAlt } from "react-icons/fa";
+//import { FaUserAlt } from "react-icons/fa";
 
 import { FaBasketShopping } from "react-icons/fa6";
 import { AnimatePresence } from "framer-motion";
 import Search from "@/features/search/components/Search";
 import { useCartContext } from "@/shared/providers/CartProvider";
 import Cart from "@/features/cart/components/Cart";
+import UserModalMenu from "@/features/user/components/UserModalMenu";
 
 const Header = () => {
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
@@ -120,7 +121,8 @@ const Header = () => {
           className={styles.item}
           onClick={() => setSearchOpen(true)}
         />
-        <FaUserAlt className={styles.item} />
+        {/* <FaUserAlt className={styles.item} /> */}
+        <UserModalMenu />
         <FaBasketShopping
           className={styles.item}
           onClick={() => setShowCart(true)}
