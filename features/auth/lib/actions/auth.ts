@@ -60,7 +60,7 @@ export async function signup(prevState: SignupFormState, formData: FormData) {
         data: {
           email: data.email,
           avatar: "",
-          favourites: [],
+          //favourites: [],
         },
       },
     });
