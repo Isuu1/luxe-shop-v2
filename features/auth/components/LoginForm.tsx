@@ -71,6 +71,7 @@ const LoginForm = () => {
           label="Email"
           icon={<FaUser />}
           onFocus={() => setError(null)}
+          placeholder="luxe@email.com"
         />
         <Input
           id="password"
