@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useCallback, useEffect, useState } from "react";
 import { Product } from "../types/product";
 import { createClient } from "@/supabase/client";
 
@@ -23,7 +23,7 @@ export const WishlistProvider = ({
 
   const supabase = createClient();
 
-  const fetchWishlist = async () => {
+  const fetchWishlist = useCallback(async () => {
     setIsLoading(true);
     try {
       const { data: authData, error: authError } =
@@ -52,11 +52,11 @@ export const WishlistProvider = ({
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [supabase]);
 
   useEffect(() => {
     fetchWishlist();
-  }, []);
+  }, [fetchWishlist]);
 
   return (
     <WishlistContext.Provider value={{ wishlist, isLoading, fetchWishlist }}>
