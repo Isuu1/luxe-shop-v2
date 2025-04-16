@@ -38,6 +38,7 @@ async function fulfillOrder(
 
   //Retrieve line items from Stripe Checkout Session
   const lineItems = await stripe.checkout.sessions.listLineItems(session.id, {
+    expand: ["data.price.product"],
     limit: 100,
   });
 

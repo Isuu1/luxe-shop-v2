@@ -1,3 +1,5 @@
+import OrdersGrid from "@/features/user/components/OrdersGrid";
+
 export default function Page() {
-  return <div>Orders</div>;
+  return <OrdersGrid />;
 }
