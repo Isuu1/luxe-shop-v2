@@ -2,6 +2,7 @@ import React from "react";
 
 //Styles
 import styles from "./Contact.module.scss";
+//Components
 import ContactForm from "./ContactForm";
 
 const Contact = () => {

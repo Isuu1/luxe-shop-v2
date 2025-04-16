@@ -1,15 +1,19 @@
 "use client";
 
-import Button from "@/shared/components/ui/Button";
-import Form from "@/shared/components/ui/Form";
-import Input from "@/shared/components/ui/Input";
 import React, { useActionState, useEffect, useState } from "react";
 
 //Styles
 import styles from "./ContactForm.module.scss";
+//Actions
 import { sendMessage } from "../lib/actions/sendMessage";
+//Types
 import { ContactFormState } from "../types/forms";
+//Components
 import LoadingIcon from "@/shared/components/LoadingIcon";
+import Button from "@/shared/components/ui/Button";
+import Form from "@/shared/components/ui/Form";
+import Input from "@/shared/components/ui/Input";
+//Icons
 import { IoSend } from "react-icons/io5";
 import { HiBackspace } from "react-icons/hi2";
 
@@ -40,8 +44,6 @@ const ContactForm = () => {
       setSuccess(false);
     }
   }, [state]);
-
-  console.log("state", state);
 
   return (
     <div className={styles.contactFormContainer}>
