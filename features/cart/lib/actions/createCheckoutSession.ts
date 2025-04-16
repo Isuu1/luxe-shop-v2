@@ -1,8 +1,10 @@
 "use server";
 
 import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
 import { stripe } from "@/shared/lib/stripe";
 import { createClient } from "@/supabase/server";
+import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import Stripe from "stripe";
 
 //Cart item data provided by the client
@@ -16,6 +18,7 @@ interface SanityProduct {
   _id: string;
   name: string;
   price: number;
+  images: SanityImageSource[];
 }
 
 export async function createCheckoutSession(cartItems: CartItemInput[]) {
@@ -44,13 +47,18 @@ export async function createCheckoutSession(cartItems: CartItemInput[]) {
     const query = `*[_type == "product" && _id in $productIds]{
           _id,
           name,
-          price
+          price,
+          images[]{
+            asset->{
+              _id,
+              url
+            }
+          }
         }`;
 
     const sanityProducts = await client.fetch<SanityProduct[]>(query, {
       productIds,
     });
-    console.log("sanityProducts", sanityProducts);
 
     // 3. Create Stripe Line Items (Using Sanity Prices)
     const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
@@ -85,24 +93,21 @@ export async function createCheckoutSession(cartItems: CartItemInput[]) {
 
       lineItems.push({
         price_data: {
-          currency: "gbp", // CHANGE TO YOUR CURRENCY
+          currency: "gbp",
           product_data: {
             name: product.name,
-            // Add description, images if needed/available from Sanity
-            // images: [urlFor(product.image).url()] // Example if you have images
+            images: [urlFor(product.images[0]).url()],
             metadata: {
               // Store the Sanity product ID if needed later (e.g., in webhook)
               sanityProductId: product._id,
             },
           },
           // IMPORTANT: Use the price from Sanity. Ensure it's in the smallest unit (cents/pence).
-          unit_amount: product.price,
+          unit_amount: product.price * 100,
         },
         quantity: cartItem.quantity,
       });
     }
-
-    console.log("lineItems", lineItems);
 
     if (lineItems.length === 0) {
       return { error: "No valid items to checkout." };

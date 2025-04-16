@@ -38,6 +38,20 @@ const Checkout = () => {
     try {
       const result = await createCheckoutSession(itemsForServer);
       console.log("result", result);
+
+      if (result.success && result.sessionId) {
+        const stripe = await stripePromise;
+        if (!stripe) {
+          console.error("Stripe.js has not loaded yet.");
+          return;
+        }
+        const { error } = await stripe.redirectToCheckout({
+          sessionId: result.sessionId,
+        });
+        if (error) {
+          console.error("Error redirecting to checkout:", error);
+        }
+      }
     } catch (error) {
       console.error("Error creating checkout session:", error);
     }
