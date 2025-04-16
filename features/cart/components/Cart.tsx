@@ -8,14 +8,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import styles from "./Cart.module.scss";
 //Icons
 import { IoIosClose } from "react-icons/io";
-import { IoSend } from "react-icons/io5";
 //Context
 import { useCartContext } from "@/shared/providers/CartProvider";
 //Components
-import Button from "@/shared/components/ui/Button";
 import CartItem from "./CartItem";
-//Utils
-import { calculateAllQuantities, calculateTotalPrice } from "../lib/utils";
+import Checkout from "./Checkout";
 
 export const cartVariants = {
   visible: {
@@ -73,10 +70,6 @@ const Cart = () => {
     };
   }, [setShowCart]);
 
-  const totalPrice = calculateTotalPrice(cartItems);
-
-  const totalQuantities = calculateAllQuantities(cartItems);
-
   return (
     <motion.div
       className={styles.cart}
@@ -114,19 +107,8 @@ const Cart = () => {
           )}
         </AnimatePresence>
       </div>
-      <div className={styles.checkout}>
-        <div className={styles.totalPrice}>
-          <p>Total:</p>
-          <p>£{totalPrice}</p>
-          <p>({totalQuantities} items)</p>
-        </div>
-        <Button
-          className={styles.checkoutButton}
-          variant="primary"
-          icon={<IoSend />}
-          text="Proceed to checkout"
-        />
-      </div>
+
+      <Checkout />
     </motion.div>
   );
 };
