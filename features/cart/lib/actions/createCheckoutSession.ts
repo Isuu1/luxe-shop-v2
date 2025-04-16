@@ -25,23 +25,20 @@ export async function createCheckoutSession(cartItems: CartItemInput[]) {
   try {
     const supabase = await createClient();
 
-    // 1. Get Authenticated User (from Supabase)
+    //Get Authenticated User (from Supabase)
     const {
       data: { user },
-      error: authError,
     } = await supabase.auth.getUser();
-    if (authError || !user) {
-      return {
-        success: false,
-        error: "User not authenticated. Please log in.",
-      };
-    }
+
+    // Determine userId for metadata - use empty string for guests
+    const userIdForMetadata = user ? user.id : ""; // Pass empty string if no user
+    const userEmail = user ? user.email : undefined; // Pass email if available
 
     if (!cartItems || cartItems.length === 0) {
       return { success: false, error: "Cannot checkout with an empty cart." };
     }
 
-    // 2. Fetch Product Data & Validate Prices (from Sanity)
+    //Fetch Product Data & Validate Prices (from Sanity)
     const productIds = cartItems.map((item) => item.productId);
 
     const query = `*[_type == "product" && _id in $productIds]{
@@ -60,35 +57,18 @@ export async function createCheckoutSession(cartItems: CartItemInput[]) {
       productIds,
     });
 
-    // 3. Create Stripe Line Items (Using Sanity Prices)
+    //Create Stripe Line Items (Using Sanity Prices)
     const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
 
     for (const cartItem of cartItems) {
       const product = sanityProducts.find((p) => p._id === cartItem.productId);
 
       if (!product) {
-        // This check is slightly redundant due to the length check above, but good for clarity
+        //This check is slightly redundant due to the length check above, but good for clarity
         console.error(
           `Validation Error: Product ${cartItem.productId} was in input but not found in Sanity results.`
         );
         return { error: `Item ${cartItem.productId} is unavailable.` };
-      }
-
-      if (typeof product.price !== "number" || product.price < 0) {
-        console.error(
-          `Validation Error: Invalid price (${product.price}) for product ${product._id} (${product.name}). Price must be a non-negative number.`
-        );
-        return {
-          error: `Invalid price for item ${product.name}. Please contact support.`,
-        };
-      }
-
-      // Ensure quantity is valid
-      if (cartItem.quantity <= 0) {
-        console.warn(
-          `Skipping item ${product._id} with quantity ${cartItem.quantity}`
-        );
-        continue; // Skip items with zero or negative quantity
       }
 
       lineItems.push({
@@ -113,19 +93,17 @@ export async function createCheckoutSession(cartItems: CartItemInput[]) {
       return { error: "No valid items to checkout." };
     }
 
-    // 4. Create Stripe Checkout Session
+    //Create Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: lineItems,
       mode: "payment",
       success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}`,
-      customer_email: user.email, // Pre-fill email from Supabase Auth
+      customer_email: userEmail, // Pre-fill email from Supabase Auth
       metadata: {
         // CRUCIAL: Store the Supabase user ID for the webhook handler
-        userId: user.id,
-        // Optional: You could store stringified cart details for reference, but mind limits
-        // cartItems: JSON.stringify(cartItemsInput.map(i => `${i.productId}x${i.quantity}`)),
+        userId: userIdForMetadata,
       },
     });
 
