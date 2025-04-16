@@ -1,0 +1,36 @@
+.contactFormContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  & input {
+    padding: 0.6rem !important;
+  }
+  .successMessage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    & button {
+      font-size: 1rem;
+    }
+  }
+  .message {
+    font-family: inherit;
+    padding: 0.6rem;
+    border-radius: 14px;
+    outline: none;
+    border: 2px solid hsla(0, 0%, 89%, 0.192);
+    transition: border 0.2s ease-in-out;
+    &:focus {
+      border: 2px solid #6b37d1;
+    }
+  }
+  .error {
+    color: red;
+    font-weight: 400;
+    text-align: center;
+  }
+}

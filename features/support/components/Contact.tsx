@@ -2,6 +2,7 @@ import React from "react";
 
 //Styles
 import styles from "./Contact.module.scss";
+import ContactForm from "./ContactForm";
 
 const Contact = () => {
   return (
@@ -14,7 +15,7 @@ const Contact = () => {
         </p>
       </div>
       <div className={styles.contactWrapper}>
-        <div>form here</div>
+        <ContactForm />
         <div className={styles.contactDetails}>
           <h3>Contact Details</h3>
           <p>
