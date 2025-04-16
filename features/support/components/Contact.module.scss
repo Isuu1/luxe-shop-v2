@@ -1,0 +1,21 @@
+.contactContainer {
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  margin-top: 2rem;
+  .headline {
+    width: 100%;
+    text-align: center;
+  }
+  .contactWrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    .contactDetails {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      text-align: center;
+    }
+  }
+}
