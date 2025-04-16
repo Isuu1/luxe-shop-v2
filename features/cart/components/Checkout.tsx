@@ -1,19 +1,22 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 
 //Styles
 import styles from "./Checkout.module.scss";
 //Components
 import Button from "@/shared/components/ui/Button";
+import LoadingIcon from "@/shared/components/LoadingIcon";
 //Providers
 import { useCartContext } from "@/shared/providers/CartProvider";
 //Utils
 import { calculateAllQuantities, calculateTotalPrice } from "../lib/utils";
 //Icons
 import { IoSend } from "react-icons/io5";
-import { loadStripe } from "@stripe/stripe-js";
+//Actions
 import { createCheckoutSession } from "../lib/actions/createCheckoutSession";
+//Stripe
+import { loadStripe } from "@stripe/stripe-js";
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 );
@@ -21,13 +24,14 @@ const stripePromise = loadStripe(
 const Checkout = () => {
   const { cartItems } = useCartContext();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const totalPrice = calculateTotalPrice(cartItems);
 
   const totalQuantities = calculateAllQuantities(cartItems);
 
-  console.log("stripePromise", stripePromise);
-
   const handleCheckout = async () => {
+    setIsLoading(true);
     // Prepare data for Server Action: ONLY IDs and Quantities
     const itemsForServer: { productId: string; quantity: number }[] =
       cartItems.map((item) => ({
@@ -54,6 +58,8 @@ const Checkout = () => {
       }
     } catch (error) {
       console.error("Error creating checkout session:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -67,10 +73,11 @@ const Checkout = () => {
       <Button
         className={styles.checkoutButton}
         variant="primary"
-        icon={<IoSend />}
+        icon={isLoading ? <LoadingIcon /> : <IoSend />}
         text="Proceed to checkout"
         type="button"
         onClick={handleCheckout}
+        disabled={isLoading}
       />
     </div>
   );
