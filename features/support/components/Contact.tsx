@@ -1,26 +1,22 @@
-import Contact from "@/features/support/components/Contact";
-import FAQ from "@/features/support/components/FAQ";
-import BackLink from "@/shared/components/BackLink";
+import React from "react";
 
-export default function Page() {
+//Styles
+import styles from "./Contact.module.scss";
+
+const Contact = () => {
   return (
-    <div className="page">
-      <BackLink />
-      <FAQ />
-      <Contact />
-      {/* <div className="support-page-container__headline">
+    <div className={styles.contactContainer}>
+      <div className={styles.headline}>
         <h2>Contact Us</h2>
         <p>
           Feel free to reach out to us using the contact form below or via the
           details provided.
         </p>
-      </div> */}
-      {/* <section className="grid-2-columns">
-        <SupportForm />
-        <div className="support-page-container__contact-details">
-          <h3 className="support-page-container__contact-details__title">
-            Contact Details
-          </h3>
+      </div>
+      <div className={styles.contactWrapper}>
+        <div>form here</div>
+        <div className={styles.contactDetails}>
+          <h3>Contact Details</h3>
           <p>
             <strong>Email:</strong> support@luxe.com
           </p>
@@ -40,7 +36,9 @@ export default function Page() {
           </p>
           <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
         </div>
-      </section> */}
+      </div>
     </div>
   );
-}
+};
+
+export default Contact;
