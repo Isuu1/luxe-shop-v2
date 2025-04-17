@@ -9,52 +9,97 @@ import { Order } from "@/shared/types/order";
 import { IoIosArrowDown } from "react-icons/io";
 import Image from "next/image";
 //Animations
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface OrderItemProps {
   order: Order;
 }
 
+const orderDetailsContainerVariants = {
+  hidden: {
+    opacity: 0, // Fade out
+    //scale: 0.8, // Scale down slightly on exit/start
+    height: 0, // Collapse height
+    transition: { duration: 0.2, ease: "easeOut" },
+    // Optional: Add transformOrigin if scale direction matters
+    // transformOrigin: "top center"
+  },
+  visible: {
+    opacity: 1, // Fade in
+    //scale: 1, // Scale to normal size
+    height: "auto", // Expand height
+    transition: { duration: 0.2, ease: "easeIn" },
+    // Optional: Add transformOrigin if scale direction matters
+    // transformOrigin: "top center"
+  },
+};
+
 const OrderItem: React.FC<OrderItemProps> = ({ order }) => {
   const [showDetails, setShowDetails] = useState(false);
 
   return (
-    <motion.div className={styles.orderItem} key={order.order_id}>
-      <p>#34567</p>
-      <p>
-        {new Date(order.created_at).toLocaleString("en-GB", {
-          year: "2-digit",
-          month: "2-digit",
-          day: "2-digit",
-        })}
-      </p>
-      <p>{order.items.length}</p>
-      <p>£{order.total_amount / 100}</p>
-      <p className={styles.status}>Fullfilled</p>
-      <i
-        className={styles.actionIcon}
-        onClick={() => setShowDetails(!showDetails)}
-      >
-        <IoIosArrowDown />
-      </i>
-      {showDetails && (
-        <div className={styles.items}>
-          {order.items.map((item) => (
-            <div className={styles.item} key={item.price.unit_amount}>
-              <strong>{item.description}</strong>
-              <Image
-                src={item.price.product.images[0]}
-                width={100}
-                height={100}
-                alt=""
-              />
-              <p>Each: £{item.price.unit_amount / 100}</p>
-              <p>{item.quantity}</p>
-              <p>Total: £{item.amount_total / 100}</p>
+    <motion.div
+      className={styles.orderItem}
+      key={order.order_id}
+      // layout
+      // transition={{ duration: 0.3, ease: "easeInOut" }}
+    >
+      <div className={`${styles.summary} ${showDetails ? styles.active : ""}`}>
+        <p>#34567</p>
+        <p>
+          {new Date(order.created_at).toLocaleString("en-GB", {
+            year: "2-digit",
+            month: "2-digit",
+            day: "2-digit",
+          })}
+        </p>
+        <p>{order.items.length}</p>
+        <p>£{order.total_amount / 100}</p>
+        <p className={styles.status}>Fullfilled</p>
+        <i
+          className={styles.actionIcon}
+          onClick={() => setShowDetails(!showDetails)}
+        >
+          <IoIosArrowDown />
+        </i>
+      </div>
+      <AnimatePresence initial={false}>
+        {showDetails && (
+          <motion.div
+            className={styles.orderDetailsContainer}
+            variants={orderDetailsContainerVariants}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+          >
+            {/* <div className={styles.innerWrapper}> */}
+            <div className={styles.items}>
+              {order.items.map((item) => (
+                <div className={styles.item} key={item.price.unit_amount}>
+                  <div className="flex-row">
+                    <Image
+                      className={styles.image}
+                      src={item.price.product.images[0]}
+                      width={100}
+                      height={100}
+                      alt=""
+                    />
+                    <div className="flex-col">
+                      <strong>{item.description}</strong>
+                      <p>£{item.price.unit_amount / 100}</p>
+                    </div>
+                  </div>
+                  <div className="flex-col">
+                    <p>Qty: {item.quantity}</p>
+                    <strong>Total: £{item.amount_total / 100}</strong>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      )}
+            {/* </div> */}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };
