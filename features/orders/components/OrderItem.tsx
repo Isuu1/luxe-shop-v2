@@ -26,7 +26,7 @@ const OrderItem: React.FC<OrderItemProps> = ({
   return (
     <div className={styles.orderItem} key={order.order_id}>
       <div className={`${styles.summary} ${isExpanded ? styles.active : ""}`}>
-        <p>#34567</p>
+        <p>{order.order_number}</p>
         <p>
           {new Date(order.created_at).toLocaleString("en-GB", {
             year: "2-digit",

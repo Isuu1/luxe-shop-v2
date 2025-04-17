@@ -11,6 +11,7 @@ export type Order = {
   shipping_address_postal_code: string;
   order_status: string;
   shipping_name: string;
+  order_number: string;
 };
 
 type OrderItem = {

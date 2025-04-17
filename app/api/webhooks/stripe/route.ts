@@ -3,7 +3,6 @@ import { createClient } from "@supabase/supabase-js";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-import { v4 as uuidv4 } from "uuid";
 
 interface CheckoutSessionMetadata {
   userId: string;
@@ -63,7 +62,7 @@ async function fulfillOrder(
     .from("orders")
     .insert({
       user_id: userIdOrGuest,
-      order_id: uuidv4(), // Generate a unique order ID
+      order_id: session.id, // Generate a unique order ID
       total_amount: session.amount_total,
       customer_email: customerEmail,
       items: lineItems.data,
