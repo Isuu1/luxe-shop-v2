@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 
 //Styles
 import styles from "./OrderItem.module.scss";
@@ -13,6 +13,8 @@ import { AnimatePresence, motion } from "framer-motion";
 
 interface OrderItemProps {
   order: Order;
+  isExpanded?: boolean;
+  onToggleExpand?: (orderId: string) => void;
 }
 
 const orderDetailsContainerVariants = {
@@ -34,8 +36,12 @@ const orderDetailsContainerVariants = {
   },
 };
 
-const OrderItem: React.FC<OrderItemProps> = ({ order }) => {
-  const [showDetails, setShowDetails] = useState(false);
+const OrderItem: React.FC<OrderItemProps> = ({
+  order,
+  isExpanded,
+  onToggleExpand,
+}) => {
+  console.log("isExpanded", isExpanded);
 
   return (
     <motion.div
@@ -44,7 +50,7 @@ const OrderItem: React.FC<OrderItemProps> = ({ order }) => {
       // layout
       // transition={{ duration: 0.3, ease: "easeInOut" }}
     >
-      <div className={`${styles.summary} ${showDetails ? styles.active : ""}`}>
+      <div className={`${styles.summary} ${isExpanded ? styles.active : ""}`}>
         <p>#34567</p>
         <p>
           {new Date(order.created_at).toLocaleString("en-GB", {
@@ -58,13 +64,13 @@ const OrderItem: React.FC<OrderItemProps> = ({ order }) => {
         <p className={styles.status}>Fullfilled</p>
         <i
           className={styles.actionIcon}
-          onClick={() => setShowDetails(!showDetails)}
+          onClick={() => onToggleExpand && onToggleExpand(order.order_id)}
         >
           <IoIosArrowDown />
         </i>
       </div>
       <AnimatePresence initial={false}>
-        {showDetails && (
+        {isExpanded && (
           <motion.div
             className={styles.orderDetailsContainer}
             variants={orderDetailsContainerVariants}

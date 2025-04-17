@@ -1,31 +1,79 @@
+"use client";
+
 import { Order } from "@/shared/types/order";
-import { createClient } from "@/supabase/server";
-import React from "react";
+import { createClient } from "@/supabase/client";
+import React, { useEffect, useState } from "react";
 
 //Styles
 import styles from "./OrdersGrid.module.scss";
 import OrderItem from "./OrderItem";
 
-const OrdersGrid = async () => {
-  const supabase = await createClient();
+const OrdersGrid = () => {
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const { data: userData, error: userError } = await supabase.auth.getUser();
-  if (userError) {
-    console.error("Error fetching user:", userError);
-    return <div>Error fetching user</div>;
+  const [expandedOrderId, setExpandedOrderId] = useState<string | null>(null);
+
+  const handleToggleExpand = (orderId: string) => {
+    setExpandedOrderId((prevExpandedId) =>
+      prevExpandedId === orderId ? null : orderId
+    );
+  };
+
+  useEffect(() => {
+    setIsLoading(true);
+    const fetchOrders = async () => {
+      try {
+        const supabase = createClient();
+
+        const { data: userData, error: userError } =
+          await supabase.auth.getUser();
+        if (userError) {
+          setError("Error fetching user");
+          return;
+        }
+
+        const { data, error } = await supabase
+          .from("orders")
+          .select("*")
+          .eq("user_id", userData.user.id)
+          .order("created_at", { ascending: false })
+          .limit(10);
+        if (error) {
+          setError("Error fetching orders");
+          return;
+        }
+        if (data) {
+          setOrders(data);
+        }
+      } catch (error) {
+        setError(error as string);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchOrders();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className={styles.ordersGrid}>
+        <div className={styles.header}>
+          <p>Order No</p>
+          <p>Date</p>
+          <p>Items</p>
+          <p>Amount</p>
+          <p>Status</p>
+          <p>Details</p>
+        </div>
+        <div className={styles.loading}>
+          <p>Loading orders...</p>
+        </div>
+      </div>
+    );
   }
 
-  const { data, error } = await supabase
-    .from("orders")
-    .select("*")
-    .eq("user_id", userData.user.id)
-    .order("created_at", { ascending: false })
-    .limit(10);
-  if (error) {
-    console.error("Error fetching orders:", error);
-    return <div>Error fetching orders</div>;
-  }
-  console.log("Fetched orders:", data);
   return (
     <div className={styles.ordersGrid}>
       <div className={styles.header}>
@@ -36,8 +84,18 @@ const OrdersGrid = async () => {
         <p>Status</p>
         <p>Details</p>
       </div>
-      {data.map((order: Order) => (
-        <OrderItem order={order} key={order.order_id} />
+      {error && (
+        <div className={styles.error}>
+          <p>{error}</p>
+        </div>
+      )}
+      {orders.map((order: Order) => (
+        <OrderItem
+          order={order}
+          key={order.order_id}
+          isExpanded={expandedOrderId === order.order_id}
+          onToggleExpand={handleToggleExpand}
+        />
       ))}
     </div>
   );
