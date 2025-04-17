@@ -1,0 +1,20 @@
+.filtersContainer {
+  max-height: 500px;
+  min-width: 200px;
+  max-width: 290px;
+  background: #f5f5f5;
+  border-radius: 20px;
+  padding: 1rem;
+  line-height: 2rem;
+  font-size: 1rem;
+  .price {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .rating {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

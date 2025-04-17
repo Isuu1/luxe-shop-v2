@@ -12,6 +12,8 @@ import styles from "@/features/products/components/ProductsGrid.module.scss";
 import { AnimatePresence } from "framer-motion";
 //Types
 import { Product } from "@/shared/types/product";
+import Filters from "./Filters";
+import { usePathname } from "next/navigation";
 
 interface ProductsGridProps {
   products: Product[]; // Replace 'any' with the actual type of your product data
@@ -21,6 +23,9 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({ products }) => {
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const [sortingOption, setSortingOption] = useState("Relevance");
   const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
+
+  const pathname = usePathname();
+  const productsPage = pathname === "/products";
 
   useEffect(() => {
     // Filter the products based on the active category
@@ -53,20 +58,23 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({ products }) => {
 
   return (
     <div className={styles.productsGrid}>
-      <div className="flex-row">
-        <SortingOptions setSortingOption={setSortingOption} />
-        <CategorySelector
-          activeCategory={activeCategory}
-          setActiveCategory={setActiveCategory}
-        />
-      </div>
+      {productsPage && <Filters />}
+      <div className="flex-col">
+        <div className="flex-row">
+          <SortingOptions setSortingOption={setSortingOption} />
+          <CategorySelector
+            activeCategory={activeCategory}
+            setActiveCategory={setActiveCategory}
+          />
+        </div>
 
-      <div className={styles.products}>
-        <AnimatePresence mode="wait">
-          {displayedProducts.map((product) => (
-            <ProductCard product={product} key={product._id} />
-          ))}
-        </AnimatePresence>
+        <div className={styles.products}>
+          <AnimatePresence mode="wait">
+            {displayedProducts.map((product) => (
+              <ProductCard product={product} key={product._id} />
+            ))}
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );
