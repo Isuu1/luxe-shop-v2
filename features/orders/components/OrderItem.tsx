@@ -35,15 +35,8 @@ const OrderItem: React.FC<OrderItemProps> = ({
   isExpanded,
   onToggleExpand,
 }) => {
-  console.log("isExpanded", isExpanded);
-
   return (
-    <motion.div
-      className={styles.orderItem}
-      key={order.order_id}
-      // layout
-      // transition={{ duration: 0.3, ease: "easeInOut" }}
-    >
+    <motion.div className={styles.orderItem} key={order.order_id}>
       <div className={`${styles.summary} ${isExpanded ? styles.active : ""}`}>
         <p>#34567</p>
         <p>
@@ -72,7 +65,6 @@ const OrderItem: React.FC<OrderItemProps> = ({
             animate="visible"
             exit="hidden"
           >
-            {/* <div className={styles.innerWrapper}> */}
             <div className={styles.items}>
               {order.items.map((item) => (
                 <div className={styles.item} key={item.price.unit_amount}>
@@ -96,7 +88,6 @@ const OrderItem: React.FC<OrderItemProps> = ({
                 </div>
               ))}
             </div>
-            {/* </div> */}
           </motion.div>
         )}
       </AnimatePresence>
