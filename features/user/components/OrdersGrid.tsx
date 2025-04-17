@@ -1,11 +1,13 @@
 "use client";
 
-import { Order } from "@/shared/types/order";
-import { createClient } from "@/supabase/client";
 import React, { useEffect, useState } from "react";
+import { createClient } from "@/supabase/client";
 
+//Types
+import { Order } from "@/shared/types/order";
 //Styles
 import styles from "./OrdersGrid.module.scss";
+//Components
 import OrderItem from "./OrderItem";
 
 const OrdersGrid = () => {
