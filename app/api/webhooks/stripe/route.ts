@@ -29,15 +29,23 @@ async function fulfillOrder(
 
   const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-  //Grab metadata passed from createCheckoutSession to get userId
+  //Grab metadata passed from createCheckoutSession
   const metadata = session.metadata as CheckoutSessionMetadata | null;
 
+  //Get userId from metadata or set to null for guests
   const userIdOrGuest =
     metadata?.userId && metadata.userId !== "" ? metadata.userId : null;
+  //Grab customer email from session
   const customerEmail = session.customer_details?.email;
+
+  //Grab shipping details from session
+  const shippingDetails = session?.collected_information?.shipping_details;
+  const shippingAddress = shippingDetails?.address;
+  const shippingCustomer = shippingDetails?.name;
 
   //Retrieve line items from Stripe Checkout Session
   const lineItems = await stripe.checkout.sessions.listLineItems(session.id, {
+    expand: ["data.price.product"],
     limit: 100,
   });
 
@@ -49,15 +57,21 @@ async function fulfillOrder(
     };
   }
 
-  //Update the order status in your database
+  //Insert order into Supabase
   const { error: orderError } = await supabase
     .from("orders")
     .insert({
       user_id: userIdOrGuest,
-      order_id: session.id,
+      order_id: session.id, // Generate a unique order ID
       total_amount: session.amount_total,
       customer_email: customerEmail,
       items: lineItems.data,
+      shipping_name: shippingCustomer,
+      shipping_address_line1: shippingAddress?.line1,
+      shipping_address_line2: shippingAddress?.line2,
+      shipping_address_city: shippingAddress?.city,
+      shipping_address_postal_code: shippingAddress?.postal_code,
+      order_status: "Fulfilled",
     })
     .select()
     .single();
@@ -69,7 +83,7 @@ async function fulfillOrder(
       error: orderError.message,
     };
   }
-  console.log("Order fulfilled successfully:", lineItems);
+
   return {
     success: true,
     error: null,
@@ -93,14 +107,9 @@ export async function POST(req: NextRequest) {
   switch (event.type) {
     case "checkout.session.completed":
       const session = event.data.object as Stripe.Checkout.Session;
-      console.log(
-        `🔔 Received checkout.session.completed for session: ${session.id}`
-      );
+
       try {
         await fulfillOrder(session);
-        console.log(
-          `✅ Successfully processed checkout.session.completed for ${session.id}`
-        );
       } catch (fulfillmentError) {
         console.error(
           `🚨 Fulfillment Error for session ${session.id}:`,

@@ -105,6 +105,9 @@ export async function createCheckoutSession(cartItems: CartItemInput[]) {
         // CRUCIAL: Store the Supabase user ID for the webhook handler
         userId: userIdForMetadata,
       },
+      shipping_address_collection: {
+        allowed_countries: ["GB"], // Adjust as needed
+      },
     });
 
     if (!session.id) {
