@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 
 //Styles
 import styles from "./OrderItem.module.scss";
@@ -9,7 +8,9 @@ import { Order } from "@/shared/types/order";
 //Icons
 import { IoIosArrowDown } from "react-icons/io";
 //Animations
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
+//Components
+import OrderDetails from "./OrderDetails";
 
 interface OrderItemProps {
   order: Order;
@@ -17,26 +18,13 @@ interface OrderItemProps {
   onToggleExpand?: (orderId: string) => void;
 }
 
-const orderDetailsContainerVariants = {
-  hidden: {
-    opacity: 0,
-    height: 0,
-    transition: { duration: 0.2, ease: "easeOut" },
-  },
-  visible: {
-    opacity: 1,
-    height: "auto",
-    transition: { duration: 0.2, ease: "easeIn" },
-  },
-};
-
 const OrderItem: React.FC<OrderItemProps> = ({
   order,
   isExpanded,
   onToggleExpand,
 }) => {
   return (
-    <motion.div className={styles.orderItem} key={order.order_id}>
+    <div className={styles.orderItem} key={order.order_id}>
       <div className={`${styles.summary} ${isExpanded ? styles.active : ""}`}>
         <p>#34567</p>
         <p>
@@ -57,41 +45,9 @@ const OrderItem: React.FC<OrderItemProps> = ({
         </i>
       </div>
       <AnimatePresence initial={false}>
-        {isExpanded && (
-          <motion.div
-            className={styles.orderDetailsContainer}
-            variants={orderDetailsContainerVariants}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-          >
-            <div className={styles.items}>
-              {order.items.map((item) => (
-                <div className={styles.item} key={item.price.unit_amount}>
-                  <div className="flex-row">
-                    <Image
-                      className={styles.image}
-                      src={item.price.product.images[0]}
-                      width={100}
-                      height={100}
-                      alt=""
-                    />
-                    <div className="flex-col">
-                      <strong>{item.description}</strong>
-                      <p>£{item.price.unit_amount / 100}</p>
-                    </div>
-                  </div>
-                  <div className="flex-col">
-                    <p>Qty: {item.quantity}</p>
-                    <strong>Total: £{item.amount_total / 100}</strong>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        )}
+        {isExpanded && <OrderDetails order={order} />}
       </AnimatePresence>
-    </motion.div>
+    </div>
   );
 };
 
