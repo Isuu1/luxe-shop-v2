@@ -1,0 +1,37 @@
+.orderItem {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  justify-items: center;
+  align-items: center;
+  //   background: #f5f5f5;
+  box-shadow: 0 0 15px -11px rgb(95, 95, 95);
+  padding: 0.7rem;
+  border-radius: 14px;
+  //flex: 1;
+  transition: all 0.2s ease;
+  &:hover {
+    cursor: pointer;
+    background: #5329a3;
+    color: #fff;
+  }
+  .status {
+    background: #22d62b;
+    color: #fff;
+    border-radius: 7px;
+    padding: 0.3rem 0.5rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+  .actionIcon {
+    margin-left: auto;
+    background: #f5f5f5;
+    color: #333;
+    border-radius: 14px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    & svg {
+      display: block;
+    }
+  }
+}
