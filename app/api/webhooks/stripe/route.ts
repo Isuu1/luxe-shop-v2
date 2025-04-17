@@ -107,14 +107,9 @@ export async function POST(req: NextRequest) {
   switch (event.type) {
     case "checkout.session.completed":
       const session = event.data.object as Stripe.Checkout.Session;
-      console.log(
-        `🔔 Received checkout.session.completed for session: ${session.id}`
-      );
+
       try {
         await fulfillOrder(session);
-        console.log(
-          `✅ Successfully processed checkout.session.completed for ${session.id}`
-        );
       } catch (fulfillmentError) {
         console.error(
           `🚨 Fulfillment Error for session ${session.id}:`,
