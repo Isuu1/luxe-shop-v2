@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 
 //Styles
 import styles from "./OrderItem.module.scss";
 import { Order } from "@/shared/types/order";
 //Icons
 import { IoIosArrowDown } from "react-icons/io";
-import Image from "next/image";
 //Animations
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -19,20 +19,14 @@ interface OrderItemProps {
 
 const orderDetailsContainerVariants = {
   hidden: {
-    opacity: 0, // Fade out
-    //scale: 0.8, // Scale down slightly on exit/start
-    height: 0, // Collapse height
+    opacity: 0,
+    height: 0,
     transition: { duration: 0.2, ease: "easeOut" },
-    // Optional: Add transformOrigin if scale direction matters
-    // transformOrigin: "top center"
   },
   visible: {
-    opacity: 1, // Fade in
-    //scale: 1, // Scale to normal size
-    height: "auto", // Expand height
+    opacity: 1,
+    height: "auto",
     transition: { duration: 0.2, ease: "easeIn" },
-    // Optional: Add transformOrigin if scale direction matters
-    // transformOrigin: "top center"
   },
 };
 
