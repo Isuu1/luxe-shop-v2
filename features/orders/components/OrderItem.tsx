@@ -36,7 +36,7 @@ const OrderItem: React.FC<OrderItemProps> = ({
         </p>
         <p>{order.items.length}</p>
         <p>£{order.total_amount / 100}</p>
-        <p className={styles.status}>Fullfilled</p>
+        <p className={styles.status}>{order.order_status}</p>
         <i
           className={styles.actionIcon}
           onClick={() => onToggleExpand && onToggleExpand(order.order_id)}

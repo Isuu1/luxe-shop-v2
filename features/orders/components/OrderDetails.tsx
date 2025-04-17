@@ -65,6 +65,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ order }) => {
         <h3>Order summary</h3>
         <div className={styles.innerWrapper}>
           <div className={styles.costs}>
+            <strong className={styles.title}>Costs</strong>
             <div className={styles.item}>
               <p>Subtotal</p>
               <p>£{order.total_amount / 100}</p>
@@ -83,8 +84,12 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ order }) => {
             </div>
           </div>
           <div className={styles.details}>
-            <p>Delivery</p>
-            <p>40 Radmore Road</p>
+            <strong className={styles.title}>Delivery</strong>
+            <p>{order.shipping_name}</p>
+            <p>{order.shipping_address_line1}</p>
+            <p>{order.shipping_address_line2}</p>
+            <p>{order.shipping_address_city}</p>
+            <p>{order.shipping_address_postal_code}</p>
           </div>
         </div>
       </div>
