@@ -13,8 +13,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="main-layout">
             <Header />
             {children}
-            <Footer />
           </div>
+          <Footer />
         </CartProvider>
       </WishlistProvider>
     </AuthProvider>
