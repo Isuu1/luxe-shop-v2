@@ -1,0 +1,19 @@
+.relatedProducts {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 2rem;
+  font-size: 1rem;
+  .title {
+    text-align: center;
+  }
+  .relatedProductsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    .item {
+      flex: 0 0 20%;
+    }
+  }
+}
