@@ -10,11 +10,13 @@ import { FaRegStar } from "react-icons/fa";
 import { FaBagShopping } from "react-icons/fa6";
 import { FaMinusSquare } from "react-icons/fa";
 import { FaPlusSquare } from "react-icons/fa";
-
 //Styles
 import styles from "./ProductDescription.module.scss";
+//Types
 import { Product } from "@/shared/types/product";
+//Components
 import Button from "@/shared/components/ui/Button";
+//Providers
 import { useCartContext } from "@/shared/providers/CartProvider";
 
 interface ProductDescriptionProps {
@@ -27,8 +29,6 @@ const ProductDescription: React.FC<ProductDescriptionProps> = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
 
   const roundedRating = Math.round(product.stars * 2) / 2;
-
-  console.log("product in description", product);
 
   // Determine the integer and half-star part
   const fullStars = Math.floor(roundedRating);
@@ -64,6 +64,7 @@ const ProductDescription: React.FC<ProductDescriptionProps> = ({ product }) => {
             icon={<FaMinusSquare />}
             onClick={() => setQuantity(quantity - 1)}
             disabled={quantity <= 1}
+            type="button"
           />
 
           <p>{quantity}</p>
@@ -73,6 +74,7 @@ const ProductDescription: React.FC<ProductDescriptionProps> = ({ product }) => {
             variant="primary"
             icon={<FaPlusSquare />}
             onClick={() => setQuantity(quantity + 1)}
+            type="button"
           />
         </div>
         <Button
@@ -81,6 +83,7 @@ const ProductDescription: React.FC<ProductDescriptionProps> = ({ product }) => {
           text="Add to cart"
           icon={<FaBagShopping />}
           onClick={() => addToCart(product, quantity)}
+          type="button"
         />
       </div>
     </div>

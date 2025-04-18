@@ -1,6 +1,8 @@
-import { Product } from "@/shared/types/product";
 import React from "react";
 import { PortableText } from "next-sanity";
+
+//Types
+import { Product } from "@/shared/types/product";
 
 //Styles
 import styles from "./ProductSpecifications.module.scss";
