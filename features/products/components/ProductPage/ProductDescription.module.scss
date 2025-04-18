@@ -29,48 +29,71 @@
     color: #555;
     line-height: 1.5rem;
   }
-  .addToCart {
+  .buttons {
     display: flex;
     align-items: center;
     gap: 1rem;
-    background: #6b37d1;
-    border-radius: 15px;
-    padding: 1rem 2rem;
-    margin-right: auto;
-    margin-top: 1.5rem;
-    transition: background 0.2s ease-in-out;
-    &:hover {
-      background: #5329a3;
-    }
-    .quantity {
-      color: #ffffff;
+    .addToCart {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      font-size: 1.1rem;
-      .button {
-        font-size: 1.4rem;
-        padding: 0;
-        & svg {
-          border-radius: 20px;
-          color: #fff;
+      gap: 1rem;
+      background: #6b37d1;
+      border-radius: 15px;
+      padding: 1rem 2rem;
+      transition: background 0.2s ease-in-out;
+      &:hover {
+        background: #5329a3;
+      }
+      .quantity {
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.1rem;
+        .button {
+          font-size: 1.4rem;
+          padding: 0;
+          & svg {
+            border-radius: 20px;
+            color: #fff;
+          }
+        }
+        .inactive {
+          cursor: not-allowed;
+          & svg {
+            color: #d3d3d3 !important;
+          }
         }
       }
-      .inactive {
-        cursor: not-allowed;
+      .addToCartButton {
+        background: transparent !important;
+        padding: 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+        gap: 1rem !important;
         & svg {
-          color: #d3d3d3 !important;
+          font-size: 1.3rem;
         }
       }
     }
-    .addToCartButton {
-      background: transparent !important;
-      padding: 0;
-      font-size: 1.1rem;
-      font-weight: 600;
-      gap: 1rem !important;
-      & svg {
-        font-size: 1.3rem;
+    .wishlistButton {
+      cursor: pointer;
+      background: #f2f2f2;
+      border-radius: 15px;
+      padding: 1rem;
+      font-size: 1.5rem;
+      transition: background 0.2s ease-in-out;
+      height: 100%;
+      &:hover {
+        background: #e0e0e0;
+      }
+      .icon {
+        .filled {
+          color: #ff0000;
+        }
+        & svg {
+          display: block;
+        }
       }
     }
   }
