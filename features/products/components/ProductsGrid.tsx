@@ -76,7 +76,6 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({ products }) => {
     // 3. Filter by Rating
     filteredProducts = filteredProducts.filter((product) => {
       // Ensure stars property exists before checking
-      console.log("Product Stars:", product.stars); // Debugging line
       const rating = product.stars ?? 0;
       return selectedRating.includes(rating);
     });
@@ -105,13 +104,13 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({ products }) => {
     // 4. Update the final displayed list
     setDisplayedProducts(sortedProducts);
   }, [
-    products, // Original list
-    activeCategory, // Category filter
-    minPriceFilter, // Price filter min
-    maxPriceFilter, // Price filter max
-    sortingOption, // Sorting option
-    selectedRating, // Rating filter
-  ]); // Re-run whenever any dependency changes
+    products,
+    activeCategory,
+    minPriceFilter,
+    maxPriceFilter,
+    sortingOption,
+    selectedRating,
+  ]);
 
   // --- Callback for Filters Component ---
   const handlePriceFilterChange = (min: number, max: number) => {
@@ -129,8 +128,6 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({ products }) => {
       }
     });
   };
-
-  console.log("Selected Ratings:", selectedRating); // Debugging line
 
   return (
     <div className={styles.productsGrid}>

@@ -6,18 +6,19 @@ import Slider from "rc-slider";
 //Styles
 import styles from "./Filters.module.scss";
 import "rc-slider/assets/index.css";
+//Components
 import Button from "@/shared/components/ui/Button";
 //Icons
 import { FaStar } from "react-icons/fa";
 
 interface FiltersProps {
-  // Overall possible range (for slider bounds)
+  //Overall possible range (for slider bounds)
   overallMinPrice: number;
   overallMaxPrice: number;
-  // Current selected range (for slider value)
+  //Current selected range (for slider value)
   currentMinPrice: number;
   currentMaxPrice: number;
-  // Callback to notify parent of changes
+  //Callback to notify parent of changes
   onRatingChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onPriceChange: (min: number, max: number) => void;
 }
@@ -30,7 +31,6 @@ const Filters: React.FC<FiltersProps> = ({
   onRatingChange,
   onPriceChange,
 }) => {
-  // Handler for when the slider value changes
   const handleSliderChange = (value: number | number[]) => {
     if (Array.isArray(value)) {
       const [min, max] = value;
@@ -39,9 +39,8 @@ const Filters: React.FC<FiltersProps> = ({
     }
   };
 
-  // Handler for the reset button
   const resetPriceFilter = () => {
-    // Reset to the overall min/max by calling the parent's handler
+    // Call the callback passed from the parent
     onPriceChange(overallMinPrice, overallMaxPrice);
   };
 
