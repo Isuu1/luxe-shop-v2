@@ -35,7 +35,7 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({ products }) => {
   const pathname = usePathname();
   const productsPage = pathname === "/products";
 
-  // --- Calculate Overall Price Range ---
+  //Calculate Overall Price Range
   const [overallMinPrice, overallMaxPrice] = useMemo(() => {
     if (!products || products.length === 0) {
       return [0, 1000]; // Default range if no products
@@ -46,7 +46,6 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({ products }) => {
     return [min, max];
   }, [products]); // Recalculate only when original products change
 
-  // --- Effect to Initialize/Reset Price Filters ---
   // Run when the overall range changes (e.g., products load/change)
   useEffect(() => {
     setMinPriceFilter(overallMinPrice);
@@ -83,7 +82,7 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({ products }) => {
 
   //Sort products
   const sortedProducts = [...filteredByRating].sort((a, b) => {
-    // Ensure stars property exists if sorting by it
+    //Ensure stars property exists if sorting by it
     const ratingA = a.stars ?? 0;
     const ratingB = b.stars ?? 0;
 
@@ -98,11 +97,11 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({ products }) => {
         return ratingB - ratingA;
       case "Relevance":
       default:
-        return 0; // No specific relevance sort applied here
+        return 0;
     }
   });
 
-  // --- Callback for Filters Component ---
+  //Callbacks for Filters Component
   const handlePriceFilterChange = (min: number, max: number) => {
     setMinPriceFilter(min);
     setMaxPriceFilter(max);
@@ -127,8 +126,8 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({ products }) => {
           overallMaxPrice={overallMaxPrice}
           currentMinPrice={minPriceFilter}
           currentMaxPrice={maxPriceFilter}
-          onRatingChange={handleRatingFilterChange} // Pass the handler
-          onPriceChange={handlePriceFilterChange} // Pass the handler
+          onRatingChange={handleRatingFilterChange}
+          onPriceChange={handlePriceFilterChange}
         />
       )}
       <div className="flex-col">
@@ -140,10 +139,7 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({ products }) => {
           />
         </div>
 
-        <motion.div
-          className={styles.products}
-          //layout
-        >
+        <motion.div className={styles.products}>
           <AnimatePresence mode="popLayout">
             {sortedProducts.map((product) => (
               <ProductCard product={product} key={product._id} />
