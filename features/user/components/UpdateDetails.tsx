@@ -60,7 +60,8 @@ const UpdateDetails = () => {
   }, [state.success, state.resetKey, fetchUser]);
 
   return (
-    <div>
+    <div className={styles.updateDetails}>
+      <h2>Account details</h2>
       <Form action={formAction}>
         <Input
           label="Email"
