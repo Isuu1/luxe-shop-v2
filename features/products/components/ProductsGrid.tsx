@@ -11,7 +11,7 @@ import Filters from "./Filters";
 // Styles
 import styles from "@/features/products/components/ProductsGrid.module.scss";
 //Animations
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 //Types
 import { Product } from "@/shared/types/product";
 
@@ -22,7 +22,6 @@ interface ProductsGridProps {
 const ProductsGrid: React.FC<ProductsGridProps> = ({ products }) => {
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const [sortingOption, setSortingOption] = useState("Relevance");
-  const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
 
   // --- Price Filter State ---
   const [minPriceFilter, setMinPriceFilter] = useState<number>(0);
@@ -54,63 +53,54 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({ products }) => {
     setMaxPriceFilter(overallMaxPrice);
   }, [overallMinPrice, overallMaxPrice]);
 
-  // --- Combined Filtering and Sorting Effect ---
-  useEffect(() => {
-    // 1. Filter by Category
-    let filteredProducts = products.filter((product) => {
-      if (activeCategory === "All") {
-        return true;
-      }
-      // Ensure categories exist before checking
-      return (
-        product.categories &&
-        product.categories.some((cat) => cat.title === activeCategory)
-      );
-    });
+  //Flter products based on selected filters and sorting
+  //Filter by Category
+  const filteredByCategory = useMemo(() => {
+    if (activeCategory === "All") {
+      return products;
+    }
+    return products.filter((product) =>
+      product.categories?.some((cat) => cat.title === activeCategory)
+    );
+  }, [activeCategory, products]);
 
-    // 2. Filter by Price (using state managed by this component)
-    filteredProducts = filteredProducts.filter((product) => {
-      return product.price >= minPriceFilter && product.price <= maxPriceFilter;
-    });
+  //Filter by price
+  const filteredByPrice = useMemo(() => {
+    return filteredByCategory.filter(
+      (product) =>
+        product.price >= minPriceFilter && product.price <= maxPriceFilter
+    );
+  }, [filteredByCategory, minPriceFilter, maxPriceFilter]);
 
-    // 3. Filter by Rating
-    filteredProducts = filteredProducts.filter((product) => {
+  //Filter by rating
+  const filteredByRating = useMemo(() => {
+    return filteredByPrice.filter((product) => {
       // Ensure stars property exists before checking
       const rating = product.stars ?? 0;
       return selectedRating.includes(rating);
     });
+  }, [filteredByPrice, selectedRating]);
 
-    // 3. Sort
-    const sortedProducts = [...filteredProducts].sort((a, b) => {
-      // Ensure stars property exists if sorting by it
-      const ratingA = a.stars ?? 0;
-      const ratingB = b.stars ?? 0;
+  //Sort products
+  const sortedProducts = [...filteredByRating].sort((a, b) => {
+    // Ensure stars property exists if sorting by it
+    const ratingA = a.stars ?? 0;
+    const ratingB = b.stars ?? 0;
 
-      switch (sortingOption) {
-        case "PriceLowToHigh":
-          return a.price - b.price;
-        case "PriceHighToLow":
-          return b.price - a.price;
-        case "RatingLowToHigh":
-          return ratingA - ratingB;
-        case "RatingHighToLow":
-          return ratingB - ratingA;
-        case "Relevance":
-        default:
-          return 0; // No specific relevance sort applied here
-      }
-    });
-
-    // 4. Update the final displayed list
-    setDisplayedProducts(sortedProducts);
-  }, [
-    products,
-    activeCategory,
-    minPriceFilter,
-    maxPriceFilter,
-    sortingOption,
-    selectedRating,
-  ]);
+    switch (sortingOption) {
+      case "PriceLowToHigh":
+        return a.price - b.price;
+      case "PriceHighToLow":
+        return b.price - a.price;
+      case "RatingLowToHigh":
+        return ratingA - ratingB;
+      case "RatingHighToLow":
+        return ratingB - ratingA;
+      case "Relevance":
+      default:
+        return 0; // No specific relevance sort applied here
+    }
+  });
 
   // --- Callback for Filters Component ---
   const handlePriceFilterChange = (min: number, max: number) => {
@@ -150,13 +140,16 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({ products }) => {
           />
         </div>
 
-        <div className={styles.products}>
-          <AnimatePresence mode="wait">
-            {displayedProducts.map((product) => (
+        <motion.div
+          className={styles.products}
+          //layout
+        >
+          <AnimatePresence mode="popLayout">
+            {sortedProducts.map((product) => (
               <ProductCard product={product} key={product._id} />
             ))}
           </AnimatePresence>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

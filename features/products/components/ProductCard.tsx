@@ -20,19 +20,20 @@ export const productCardAnimation = {
   visible: {
     scale: 1,
     transition: {
-      duration: 0.2,
+      duration: 1,
+      type: "spring",
     },
   },
   hidden: {
     scale: 0,
     transition: {
-      duration: 0.2,
+      duration: 1,
     },
   },
   exit: {
     scale: 0,
     transition: {
-      duration: 0.2,
+      duration: 1,
     },
   },
 };
@@ -46,7 +47,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   return (
     <motion.div
-      key={product._id}
+      layout
       className={styles.productCard}
       variants={productCardAnimation}
       initial="hidden"
