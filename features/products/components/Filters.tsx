@@ -1,65 +1,109 @@
 "use client";
 
 import React from "react";
+import Slider from "rc-slider";
 
 //Styles
 import styles from "./Filters.module.scss";
+import "rc-slider/assets/index.css";
 import Button from "@/shared/components/ui/Button";
+//Icons
+import { FaStar } from "react-icons/fa";
 
-const Filters = () => {
+interface FiltersProps {
+  // Overall possible range (for slider bounds)
+  overallMinPrice: number;
+  overallMaxPrice: number;
+  // Current selected range (for slider value)
+  currentMinPrice: number;
+  currentMaxPrice: number;
+  // Callback to notify parent of changes
+  onRatingChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onPriceChange: (min: number, max: number) => void;
+}
+
+const Filters: React.FC<FiltersProps> = ({
+  overallMinPrice,
+  overallMaxPrice,
+  currentMinPrice,
+  currentMaxPrice,
+  onRatingChange,
+  onPriceChange,
+}) => {
+  // Handler for when the slider value changes
+  const handleSliderChange = (value: number | number[]) => {
+    if (Array.isArray(value)) {
+      const [min, max] = value;
+      // Call the callback passed from the parent
+      onPriceChange(min, max);
+    }
+  };
+
+  // Handler for the reset button
+  const resetPriceFilter = () => {
+    // Reset to the overall min/max by calling the parent's handler
+    onPriceChange(overallMinPrice, overallMaxPrice);
+  };
+
+  // Prevent slider errors if max <= min (e.g., only one product)
+  const isSliderDisabled = overallMinPrice >= overallMaxPrice;
+  const sliderValue = isSliderDisabled
+    ? [overallMinPrice, overallMinPrice]
+    : [currentMinPrice, currentMaxPrice];
+
+  const renderRatingElement = (value: number) => {
+    return (
+      <div className={styles.ratingElement} key={value}>
+        <label htmlFor="rating"></label>
+        <input
+          id="rating"
+          type="checkbox"
+          value={value}
+          defaultChecked
+          onChange={onRatingChange}
+        />
+        <div className={styles.checkbox}></div>
+        {Array.from({ length: value }, (_, index) => (
+          <FaStar key={index} className={styles.star} />
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div className={styles.filtersContainer}>
       <h3>Filters</h3>
       <div className={styles.price}>
         <strong>Price</strong>
-        <div className="filters-container__price__indicators">
-          {/* <p>£{currentMinPrice}</p>
-
-            <p>£{currentMaxPrice}</p> */}
+        <div className={styles.priceLabels}>
+          <p>£{currentMinPrice}</p>
+          <p>-</p>
+          <p>£{currentMaxPrice}</p>
         </div>
-        {/* <Slider
-            allowCross={false}
-            range
-            min={lowestPrice}
-            max={highestPrice}
-            onChange={handlePriceChange}
-            value={[currentMinPrice, currentMaxPrice]}
-          /> */}
+        <Slider
+          allowCross={false}
+          range
+          step={10}
+          min={overallMinPrice}
+          max={overallMaxPrice}
+          onChange={handleSliderChange}
+          value={sliderValue}
+          disabled={isSliderDisabled}
+        />
         <Button
+          className={styles.resetPriceButton}
           variant="primary"
           type="button"
           text="Reset price"
-          //onClick={resetPriceFilter}
+          onClick={resetPriceFilter}
         />
       </div>
 
       <div className={styles.rating}>
         <strong>Rating</strong>
-        {/* <FiltersRatingSelector
-            value={5}
-            fullStars={5}
-            halfStars={0}
-          />
-          <FiltersRatingSelector
-            value={4}
-            fullStars={4}
-            halfStars={1}
-          />
-          <FiltersRatingSelector
-            value={3}
-            fullStars={3}
-            halfStars={2}
-          />
-          <FiltersRatingSelector
-            value={2}
-            fullStars={2}
-            halfStars={3}
-          />
-          <FiltersRatingSelector
-            value={1}
-            fullStars={1}
-            halfStars={4}
-          /> */}
+        {Array.from({ length: 5 }, (_, index) =>
+          renderRatingElement(5 - index)
+        )}
       </div>
     </div>
   );
