@@ -7,7 +7,7 @@
   background: #5329a3;
   .inputContainer {
     padding: 1rem 0;
-    width: 90%;
+    //width: 90%;
     margin: 0 auto;
     position: relative;
     .label {
@@ -47,5 +47,36 @@
         color: #fff;
       }
     }
+    .results {
+      display: flex;
+      flex-direction: column;
+      padding: 0.5rem 1rem;
+      width: 100%;
+      list-style: none;
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .inputContainer {
+    width: 90%;
+  }
+}
+
+@media (min-width: 1250px) {
+  .inputContainer {
+    width: 80%;
+  }
+}
+
+@media (min-width: 1400px) {
+  .inputContainer {
+    width: 70%;
+  }
+}
+
+@media (min-width: 1600px) {
+  .inputContainer {
+    width: 60%;
   }
 }

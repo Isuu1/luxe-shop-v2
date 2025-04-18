@@ -8,6 +8,8 @@ import { motion } from "framer-motion";
 import styles from "./Search.module.scss";
 //Icons
 import { RiSearchLine } from "react-icons/ri";
+import { getProducts } from "@/features/products/lib/getProducts";
+import { Product } from "@/shared/types/product";
 
 export const searchBarVariants = {
   hidden: {
@@ -35,6 +37,8 @@ interface SearchProps {
 
 const Search: React.FC<SearchProps> = ({ closeSearch }) => {
   const [searchQuery, setSearchQuery] = useState<string | null>(null);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [matchingProducts, setMatchingProducts] = useState<Product[]>([]);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
@@ -42,11 +46,20 @@ const Search: React.FC<SearchProps> = ({ closeSearch }) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchQuery(value);
-    console.log("value", value);
+    const matchingProducts = products.filter((product) => {
+      return product.name
+        .toLowerCase()
+        .split(" ")
+        .some((word) => word.startsWith(value));
+    });
+    setMatchingProducts(matchingProducts);
   };
+
+  console.log("matchingProducts", matchingProducts);
 
   const handleInputClear = () => {
     setSearchQuery(null);
+    setMatchingProducts([]); // Clear the matching products
     if (inputRef.current) {
       inputRef.current.value = ""; // Clear the input field
     }
@@ -67,6 +80,19 @@ const Search: React.FC<SearchProps> = ({ closeSearch }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [closeSearch]);
+
+  //Fetch all products
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const data = await getProducts();
+        setProducts(data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+    fetchProducts();
+  }, []);
 
   return (
     <motion.div
@@ -118,13 +144,14 @@ const Search: React.FC<SearchProps> = ({ closeSearch }) => {
             Could not find products matching your search criteria
           </motion.p>
         )} */}
-      {/* {matchingProducts.length !== 0 && (
-          <ul className="mobile-search__results">
-            {matchingProducts.map((item) => (
-              <SearchItem key={item._id} item={item} />
-            ))}
-          </ul>
-        )} */}
+      {matchingProducts.length > 0 && (
+        <ul className={styles.results}>
+          {matchingProducts.map((item) => (
+            <li key={item._id}>{item.name}</li>
+            // <SearchItem key={item._id} item={item} />
+          ))}
+        </ul>
+      )}
     </motion.div>
   );
 };
