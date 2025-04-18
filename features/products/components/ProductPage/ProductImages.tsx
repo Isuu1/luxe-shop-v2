@@ -1,5 +1,5 @@
 "use client";
-import { urlFor } from "@/sanity/lib/image";
+
 import Image from "next/image";
 import React, { useState } from "react";
 
@@ -7,6 +7,8 @@ import React, { useState } from "react";
 import styles from "./ProductImages.module.scss";
 //Types
 import { Product } from "@/shared/types/product";
+//Utils
+import { urlFor } from "@/sanity/lib/image";
 
 interface ProductImagesProps {
   product: Product;
