@@ -23,7 +23,7 @@ const Bestsellers: React.FC<BestsellersProps> = ({ products }) => {
     },
     [
       Autoplay({
-        delay: 3000,
+        delay: 2000,
       }),
     ]
   );
