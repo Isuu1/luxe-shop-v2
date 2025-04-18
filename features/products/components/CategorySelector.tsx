@@ -45,7 +45,7 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({
 
   const generateCategoryIcon = (category: string) => {
     switch (category) {
-      case "Electronics":
+      case "Smartphones":
         return <MdOutlineSmartphone />;
       case "Headphones":
         return <FaHeadphones />;
