@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useActionState, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 //Icons
 import { IoMdMail } from "react-icons/io";
@@ -12,15 +13,17 @@ import { FaEyeSlash } from "react-icons/fa";
 import Button from "@/shared/components/ui/Button";
 import Form from "@/shared/components/ui/Form";
 import Input from "@/shared/components/ui/Input";
-import { ChangePasswordFormState } from "../types/forms";
-import toast from "react-hot-toast";
-import { toastStyle } from "@/shared/styles/toast";
 import LoadingIcon from "@/shared/components/LoadingIcon";
+import ChangeDetailsError from "./ChangeDetailsError";
+//Types
+import { ChangePasswordFormState } from "../types/forms";
+//Utils
+import { normalizeErrors } from "@/features/auth/lib/utils";
+//Actions
+import { changeUserPassword } from "../lib/actions/changePassword";
 //Styles
 import styles from "./UpdatePassword.module.scss";
-import { changeUserPassword } from "../lib/actions/changePassword";
-import { normalizeErrors } from "@/features/auth/lib/utils";
-import ChangeDetailsError from "./ChangeDetailsError";
+import { toastStyle } from "@/shared/styles/toast";
 
 const initialState: ChangePasswordFormState = {
   data: { newPassword: "", confirmPassword: "" },
@@ -89,7 +92,7 @@ const UpdateDetails = () => {
 
         <Button
           variant="primary"
-          text="Update password"
+          text={isPending ? "Updating..." : "Update password"}
           type="submit"
           icon={isPending ? <LoadingIcon /> : <IoSend />}
           disabled={isPending}

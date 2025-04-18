@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useActionState, useEffect } from "react";
+import toast from "react-hot-toast";
 
 //Icons
 import { IoMdMail } from "react-icons/io";
@@ -13,13 +14,15 @@ import { useAuth } from "@/shared/providers/AuthProvider";
 import Button from "@/shared/components/ui/Button";
 import Form from "@/shared/components/ui/Form";
 import Input from "@/shared/components/ui/Input";
-import { ChangeDetailsFormState } from "../types/forms";
-import { changeUserDetails } from "../lib/actions/changeDetails";
-import toast from "react-hot-toast";
-import { toastStyle } from "@/shared/styles/toast";
 import LoadingIcon from "@/shared/components/LoadingIcon";
+//Types
+import { ChangeDetailsFormState } from "../types/forms";
+//Actions
+import { changeUserDetails } from "../lib/actions/changeDetails";
 //Styles
 import styles from "./UpdateDetails.module.scss";
+import { toastStyle } from "@/shared/styles/toast";
+//Utils
 import { createClient } from "@/supabase/client";
 
 const initialState: ChangeDetailsFormState = {
@@ -39,11 +42,15 @@ const UpdateDetails = () => {
 
   const handleResendEmail = async () => {
     const supabase = createClient();
-    await supabase.auth.resend({
-      type: "email_change",
-      email: email,
-    });
-    toast.success("Email resent successfully", toastStyle);
+    try {
+      await supabase.auth.resend({
+        type: "email_change",
+        email: email,
+      });
+      toast.success("Email resent successfully", toastStyle);
+    } catch (error) {
+      toast.error(`Error resending email:${error} `, toastStyle);
+    }
   };
 
   useEffect(() => {
@@ -98,7 +105,7 @@ const UpdateDetails = () => {
         />
         <Button
           variant="primary"
-          text="Update details"
+          text={isPending ? "Updating..." : "Update details"}
           type="submit"
           icon={isPending ? <LoadingIcon /> : <IoSend />}
           disabled={isPending}
