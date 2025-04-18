@@ -69,6 +69,26 @@ h1 {
   align-items: center;
 }
 
+/* RC Slider styles */
+.rc-slider {
+  margin: 0.8rem 0 !important;
+}
+.rc-slider-handle {
+  border: solid 2px #6b37d1 !important;
+  background: #6b37d1 !important;
+  margin-top: -7px !important;
+  width: 21px !important;
+  height: 21px !important;
+  opacity: 1 !important;
+}
+.rc-slider-track {
+  background-color: #6b37d1 !important;
+  height: 6px !important;
+}
+.rc-slider-rail {
+  height: 6px !important;
+}
+
 @media (min-width: 1024px) {
   .main-layout {
     width: 90%;

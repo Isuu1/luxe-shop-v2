@@ -12,7 +12,6 @@ import { urlFor } from "@/sanity/lib/image";
 import { Product } from "@/shared/types/product";
 //Icons
 import { FaStar } from "react-icons/fa";
-
 //Components
 import ProductCardOverlay from "./ProductCardOverlay";
 
@@ -21,6 +20,7 @@ export const productCardAnimation = {
     scale: 1,
     transition: {
       duration: 0.2,
+      type: "spring",
     },
   },
   hidden: {
@@ -46,7 +46,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   return (
     <motion.div
-      key={product._id}
+      layout
       className={styles.productCard}
       variants={productCardAnimation}
       initial="hidden"
