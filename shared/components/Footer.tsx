@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
     <footer className={styles.footer}>
       <div className="flex-row-space-between">
         <div className={styles.contact}>
-          <h2>Contact</h2>
+          <h3>Contact</h3>
           <p>Luxe Ltd.</p>
           <p>1 Kensington High Street </p>
           <p> London, W8 5NP </p>
@@ -23,7 +23,7 @@ const Footer: React.FC = () => {
           </p>
         </div>
         <div className={styles.socials}>
-          <h2>Socials</h2>
+          <h3>Socials</h3>
           <div className={styles.icons}>
             <Image
               className={styles.icon}
