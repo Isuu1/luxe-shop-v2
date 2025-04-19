@@ -101,21 +101,27 @@ const UserModalMenu = () => {
             <nav className={styles.menu}>
               {user && (
                 <>
-                  <Link href="/user/account">
+                  <Link
+                    href="/user/account"
+                    onClick={() => setModalOpen(false)}
+                  >
                     <div className={styles.menuItem}>
                       <FaUser className={styles.icon} />
                       <p>Account details</p>
                       <IoIosArrowForward className={styles.icon} />
                     </div>
                   </Link>
-                  <Link href="/user/wishlist">
+                  <Link
+                    href="/user/wishlist"
+                    onClick={() => setModalOpen(false)}
+                  >
                     <div className={styles.menuItem}>
                       <IoHeart className={styles.icon} />
                       <p>Wishlist</p>
                       <IoIosArrowForward className={styles.icon} />
                     </div>
                   </Link>
-                  <Link href="/user/orders">
+                  <Link href="/user/orders" onClick={() => setModalOpen(false)}>
                     <div className={styles.menuItem}>
                       <IoWallet className={styles.icon} />
                       <p>Orders</p>
