@@ -89,6 +89,12 @@ h1 {
   height: 6px !important;
 }
 
+@media (max-width: 1024px) {
+  .main-layout {
+    width: 97%;
+  }
+}
+
 @media (min-width: 1024px) {
   .main-layout {
     width: 90%;
