@@ -63,6 +63,12 @@ h1 {
   gap: 0.5rem;
 }
 
+@media (max-width: 768px) {
+  .page .flex-row {
+    flex-direction: column;
+  }
+}
+
 .flex-row-space-between {
   display: flex;
   justify-content: space-between;

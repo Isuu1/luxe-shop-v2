@@ -17,3 +17,13 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .relatedProducts {
+    .relatedProductsContainer {
+      .item {
+        flex: 0 0 30%;
+      }
+    }
+  }
+}
