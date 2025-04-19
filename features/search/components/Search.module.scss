@@ -4,7 +4,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  background: #5329a3;
+  background: #6b37d1;
   .inputContainer {
     padding: 1rem 0;
     //width: 90%;
@@ -42,21 +42,34 @@
       border-radius: 14px;
       border: 0;
       cursor: pointer;
+      transition:
+        background 0.2s ease-in-out,
+        color 0.2s ease-in-out;
+      font-weight: 500;
       &:hover {
-        background: #6b37d1;
+        background: #5329a3;
         color: #fff;
       }
     }
   }
   .results {
-    // position: absolute;
-    // left: 0;
     display: flex;
     margin: 0 auto;
-    gap: 0.5rem;
+    gap: 1rem;
     flex-direction: column;
-    padding: 0.5rem 0;
+    padding: 1.5rem 0;
     list-style: none;
+    overflow: auto;
+    .resultsCount {
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .noResults {
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
   }
 }
 

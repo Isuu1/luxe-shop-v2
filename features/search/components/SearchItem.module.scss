@@ -16,7 +16,7 @@
   &:after {
     position: absolute;
     //bottom: 1rem;
-    bottom: 0;
+    bottom: -0.5rem;
     content: "";
     display: block;
     width: 100%;
@@ -44,6 +44,7 @@
     justify-content: center;
     margin-left: auto;
     flex-direction: column;
+    margin-right: 5px;
     .icon {
       font-size: 1.3rem;
       .wishlistIcon {

@@ -8,8 +8,11 @@ import { motion } from "framer-motion";
 import styles from "./Search.module.scss";
 //Icons
 import { RiSearchLine } from "react-icons/ri";
+//Utils
 import { getProducts } from "@/features/products/lib/getProducts";
+//Types
 import { Product } from "@/shared/types/product";
+//Components
 import SearchItem from "./SearchItem";
 
 export const searchBarVariants = {
@@ -20,14 +23,14 @@ export const searchBarVariants = {
     y: 0,
     transition: {
       type: "tween",
-      duration: 0.1,
+      duration: 0.2,
     },
   },
   exit: {
     y: -100,
     transition: {
       type: "tween",
-      duration: 0.1,
+      duration: 0.2,
     },
   },
 };
@@ -44,34 +47,14 @@ const Search: React.FC<SearchProps> = ({ closeSearch }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setSearchQuery(value);
-    const matchingProducts = products.filter((product) => {
-      return product.name
-        .toLowerCase()
-        .split(" ")
-        .some((word) => word.startsWith(value));
-    });
-    setMatchingProducts(matchingProducts);
-  };
-
-  console.log("matchingProducts", matchingProducts);
-
-  const handleInputClear = () => {
-    setSearchQuery(null);
-    setMatchingProducts([]); // Clear the matching products
-    if (inputRef.current) {
-      inputRef.current.value = ""; // Clear the input field
-    }
-  };
-
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (
         searchContainerRef.current &&
         !searchContainerRef.current.contains(e.target as Node)
       ) {
+        setMatchingProducts([]);
+        setSearchQuery(null); // Clear the search query
         closeSearch(); // Call the closeSearch function when clicking outside
       }
     }
@@ -101,6 +84,26 @@ const Search: React.FC<SearchProps> = ({ closeSearch }) => {
     }
   }, []);
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+    const matchingProducts = products.filter((product) => {
+      return product.name
+        .toLowerCase()
+        .split(" ")
+        .some((word) => word.startsWith(value));
+    });
+    setMatchingProducts(matchingProducts);
+  };
+
+  const handleInputClear = () => {
+    setSearchQuery(null);
+    setMatchingProducts([]);
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
+  };
+
   return (
     <motion.div
       ref={searchContainerRef}
@@ -124,38 +127,28 @@ const Search: React.FC<SearchProps> = ({ closeSearch }) => {
         </span>
         {searchQuery && (
           <button className={styles.clearButton} onClick={handleInputClear}>
-            clear
+            Clear
           </button>
         )}
       </div>
 
-      {/* {searchQuery && (
-          <p className="mobile-search__results-count">
+      {searchQuery && (
+        <ul className={styles.results}>
+          <p className={styles.resultsCount}>
             {`${matchingProducts.length} ${
-              matchingProducts.length === 1
-                ? "result for"
-                : "results for"
+              matchingProducts.length === 1 ? "result for" : "results for"
             } `}
             <span className="bold">{searchQuery}</span>
           </p>
-        )} */}
-
-      {/* {matchingProducts.length === 0 && searchQuery && (
-          <motion.p
-            className="mobile-search__not-found"
-            variants={opacityAnimation}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-          >
-            Could not find products matching your search criteria
-          </motion.p>
-        )} */}
-      {matchingProducts.length > 0 && (
-        <ul className={styles.results}>
-          {matchingProducts.map((item) => (
-            <SearchItem key={item._id} product={item} />
-          ))}
+          {matchingProducts.length > 0 &&
+            matchingProducts.map((item) => (
+              <SearchItem key={item._id} product={item} />
+            ))}
+          {matchingProducts.length === 0 && (
+            <p className={styles.noResults}>
+              No products found matching your search criteria
+            </p>
+          )}
         </ul>
       )}
     </motion.div>

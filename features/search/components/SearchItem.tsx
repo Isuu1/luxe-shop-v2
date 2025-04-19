@@ -19,6 +19,8 @@ import { useCartContext } from "@/shared/providers/CartProvider";
 import { useWishlist } from "@/shared/providers/WishlistProvider";
 //Actions
 import { addToWishlist } from "@/features/wishlist/lib/actions/addToWishlist";
+//Animations
+import { motion } from "framer-motion";
 
 interface SearchItemProps {
   product: Product;
@@ -70,16 +72,24 @@ const SearchItem: React.FC<SearchItemProps> = ({ product }) => {
         <p className="item__details__price">£{product.price}</p>
       </div>
       <div className={styles.buttons}>
-        <i className={styles.icon} onClick={handleAddToCart}>
+        <motion.i
+          className={styles.icon}
+          onClick={handleAddToCart}
+          whileTap={{ scale: 1.6 }}
+        >
           <FaBagShopping />
-        </i>
-        <i className={styles.icon} onClick={handleAddToWishlist}>
+        </motion.i>
+        <motion.i
+          className={styles.icon}
+          onClick={handleAddToWishlist}
+          whileTap={{ scale: 1.6 }}
+        >
           {isProductInWishlist ? (
             <FaHeart className={styles.wishlistIcon} />
           ) : (
             <FaRegHeart />
           )}
-        </i>
+        </motion.i>
       </div>
     </Link>
   );
