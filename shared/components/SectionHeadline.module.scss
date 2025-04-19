@@ -13,3 +13,9 @@
     padding: 0.2rem;
   }
 }
+
+@media (max-width: 768px) {
+  .headline {
+    font-size: 1.5rem;
+  }
+}
