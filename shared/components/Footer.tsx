@@ -7,7 +7,7 @@ import Image from "next/image";
 const Footer: React.FC = () => {
   return (
     <footer className={styles.footer}>
-      <div className="flex-row-space-between">
+      <div className={styles.innerWrapper}>
         <div className={styles.contact}>
           <h3>Contact</h3>
           <p>Luxe Ltd.</p>
