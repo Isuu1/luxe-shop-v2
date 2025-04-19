@@ -112,8 +112,8 @@ const UserModalMenu = () => {
                 height={60}
               />
             </div>
-            <p className={styles.username}>{username}</p>
-            <em className={styles.email}>{email}</em>
+            {user && <p className={styles.username}>{username}</p>}
+            {user && <em className={styles.email}>{email}</em>}
             <nav className={styles.menu}>
               {user && (
                 <>
@@ -154,13 +154,15 @@ const UserModalMenu = () => {
                 </>
               )}
               {!user && (
-                <p>
-                  Please{" "}
-                  <strong>
-                    <Link href="/user">log in</Link>
-                  </strong>
-                  to see this page
-                </p>
+                <div className={styles.loggedOut}>
+                  <p>Hello there! 👋</p>
+                  <p>
+                    <strong>
+                      <Link href="/login">Sign in</Link>
+                    </strong>{" "}
+                    to view your profile, wishlist, and order history.
+                  </p>
+                </div>
               )}
             </nav>
           </motion.div>
