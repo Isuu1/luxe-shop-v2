@@ -24,7 +24,7 @@ import { useCartContext } from "@/shared/providers/CartProvider";
 const Header = () => {
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
 
-  const { showCart, setShowCart } = useCartContext();
+  const { showCart, setShowCart, cartItems } = useCartContext();
 
   return (
     <div className={styles.header}>
@@ -73,6 +73,7 @@ const Header = () => {
           className={styles.item}
           onClick={() => setShowCart(true)}
         />
+        <span className={styles.cartItemsCounter}>{cartItems.length}</span>
       </div>
     </div>
   );
