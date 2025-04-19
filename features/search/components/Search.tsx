@@ -117,6 +117,7 @@ const Search: React.FC<SearchProps> = ({ closeSearch }) => {
         <label className={styles.label}>search</label>
         <input
           className={styles.input}
+          autoComplete="off"
           ref={inputRef}
           id="search"
           type="text"
