@@ -10,6 +10,7 @@ import styles from "./Search.module.scss";
 import { RiSearchLine } from "react-icons/ri";
 import { getProducts } from "@/features/products/lib/getProducts";
 import { Product } from "@/shared/types/product";
+import SearchItem from "./SearchItem";
 
 export const searchBarVariants = {
   hidden: {
@@ -147,8 +148,7 @@ const Search: React.FC<SearchProps> = ({ closeSearch }) => {
       {matchingProducts.length > 0 && (
         <ul className={styles.results}>
           {matchingProducts.map((item) => (
-            <li key={item._id}>{item.name}</li>
-            // <SearchItem key={item._id} item={item} />
+            <SearchItem key={item._id} product={item} />
           ))}
         </ul>
       )}
