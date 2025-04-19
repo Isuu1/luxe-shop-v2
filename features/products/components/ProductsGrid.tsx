@@ -131,7 +131,7 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({ products }) => {
         />
       )}
       <div className="flex-col">
-        <div className="flex-row">
+        <div className={styles.sorting}>
           <SortingOptions setSortingOption={setSortingOption} />
           <CategorySelector
             activeCategory={activeCategory}
