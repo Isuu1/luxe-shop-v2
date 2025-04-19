@@ -142,7 +142,12 @@ const Search: React.FC<SearchProps> = ({ closeSearch }) => {
           </p>
           {matchingProducts.length > 0 &&
             matchingProducts.map((item) => (
-              <SearchItem key={item._id} product={item} />
+              <SearchItem
+                key={item._id}
+                product={item}
+                closeSearch={closeSearch}
+                onProductClick={() => setSearchQuery(null)}
+              />
             ))}
           {matchingProducts.length === 0 && (
             <p className={styles.noResults}>

@@ -24,9 +24,15 @@ import { motion } from "framer-motion";
 
 interface SearchItemProps {
   product: Product;
+  closeSearch: () => void; // Optional callback for item click
+  onProductClick: () => void;
 }
 
-const SearchItem: React.FC<SearchItemProps> = ({ product }) => {
+const SearchItem: React.FC<SearchItemProps> = ({
+  product,
+  closeSearch,
+  onProductClick,
+}) => {
   const { addToCart } = useCartContext();
 
   const { wishlist, fetchWishlist } = useWishlist();
@@ -56,42 +62,51 @@ const SearchItem: React.FC<SearchItemProps> = ({ product }) => {
     }
   };
 
+  const handleItemClick = () => {
+    if (onProductClick) {
+      onProductClick();
+      closeSearch();
+    }
+  };
+
   return (
-    <Link
-      href={`/product/${product.slug.current}`}
-      className={styles.searchItem}
-    >
-      <Image
-        src={urlFor(product.images[0]).toString()}
-        className={styles.thumbnail}
-        alt=""
-        fill
-      />
-      <div className={styles.details}>
-        <h3 className="item__details__title">{product.name}</h3>
-        <p className="item__details__price">£{product.price}</p>
-      </div>
-      <div className={styles.buttons}>
-        <motion.i
-          className={styles.icon}
-          onClick={handleAddToCart}
-          whileTap={{ scale: 1.6 }}
-        >
-          <FaBagShopping />
-        </motion.i>
-        <motion.i
-          className={styles.icon}
-          onClick={handleAddToWishlist}
-          whileTap={{ scale: 1.6 }}
-        >
-          {isProductInWishlist ? (
-            <FaHeart className={styles.wishlistIcon} />
-          ) : (
-            <FaRegHeart />
-          )}
-        </motion.i>
-      </div>
-    </Link>
+    <li onClick={handleItemClick} className={styles.searchItemWrapper}>
+      <Link
+        href={`/product/${product.slug.current}`}
+        className={styles.searchItem}
+      >
+        <Image
+          src={urlFor(product.images[0]).toString()}
+          className={styles.thumbnail}
+          alt=""
+          fill
+        />
+        <div className={styles.details}>
+          <h3 className="item__details__title">{product.name}</h3>
+          <p className="item__details__price">£{product.price}</p>
+        </div>
+        <div className={styles.buttons}>
+          <motion.i
+            className={styles.icon}
+            onClick={handleAddToCart}
+            whileTap={{ scale: 1.6 }}
+          >
+            <FaBagShopping />
+          </motion.i>
+          <motion.i
+            className={styles.icon}
+            onClick={handleAddToWishlist}
+            whileTap={{ scale: 1.6 }}
+          >
+            {isProductInWishlist ? (
+              <FaHeart className={styles.wishlistIcon} />
+            ) : (
+              <FaRegHeart />
+            )}
+          </motion.i>
+        </div>
+      </Link>
+    </li>
   );
 };
 
