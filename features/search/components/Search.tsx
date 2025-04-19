@@ -95,6 +95,12 @@ const Search: React.FC<SearchProps> = ({ closeSearch }) => {
     fetchProducts();
   }, []);
 
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus(); // Focus the input field when the component mounts
+    }
+  }, []);
+
   return (
     <motion.div
       ref={searchContainerRef}
