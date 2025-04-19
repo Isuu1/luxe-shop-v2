@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${rubik.className}`}>
+      <body className={`${rubik.className}`} id="modal-root">
         {children}
         <Toaster />
       </body>

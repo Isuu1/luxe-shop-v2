@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 
 //Styles
 import styles from "./ProductCardOverlay.module.scss";
@@ -16,10 +16,12 @@ import { Product } from "@/shared/types/product";
 //Actions
 import { addToWishlist } from "@/features/wishlist/lib/actions/addToWishlist";
 //Animations
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useWishlist } from "@/shared/providers/WishlistProvider";
 import toast from "react-hot-toast";
 import { toastStyle } from "@/shared/styles/toast";
+import { useAuth } from "@/shared/providers/AuthProvider";
+import LoginPrompt from "@/shared/components/LoginPrompt";
 
 interface ProductCardOverlayProps {
   product: Product;
@@ -28,7 +30,11 @@ interface ProductCardOverlayProps {
 const ProductCardOverlay: React.FC<ProductCardOverlayProps> = ({ product }) => {
   const { addToCart } = useCartContext();
 
+  const { user } = useAuth();
+
   const { wishlist, fetchWishlist } = useWishlist();
+
+  const [loginPromptOpen, setLoginPromptOpen] = useState(false);
 
   const isProductInWishlist = wishlist?.some(
     (item: Product) => item._id === product._id
@@ -38,6 +44,12 @@ const ProductCardOverlay: React.FC<ProductCardOverlayProps> = ({ product }) => {
     e.stopPropagation();
     e.preventDefault();
     addToCart(product, 1);
+  };
+
+  const handleOpenLoginPrompt = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setLoginPromptOpen(true);
   };
 
   const handleAddToWishlist = async (e: React.MouseEvent) => {
@@ -58,26 +70,33 @@ const ProductCardOverlay: React.FC<ProductCardOverlayProps> = ({ product }) => {
   };
 
   return (
-    <div className={styles.overlay}>
-      <motion.div
-        className={styles.button}
-        whileTap={{ scale: 1.6 }}
-        onClick={handleAddToCart}
-      >
-        <FaBagShopping />
-      </motion.div>
-      <motion.div
-        className={styles.button}
-        whileTap={{ scale: 1.6 }}
-        onClick={handleAddToWishlist}
-      >
-        {isProductInWishlist ? (
-          <FaHeart className={styles.wishlist} />
-        ) : (
-          <FaRegHeart />
+    <>
+      <AnimatePresence>
+        {loginPromptOpen && (
+          <LoginPrompt onClose={() => setLoginPromptOpen(false)} />
         )}
-      </motion.div>
-    </div>
+      </AnimatePresence>
+      <div className={styles.overlay}>
+        <motion.div
+          className={styles.button}
+          whileTap={{ scale: 1.6 }}
+          onClick={handleAddToCart}
+        >
+          <FaBagShopping />
+        </motion.div>
+        <motion.div
+          className={styles.button}
+          whileTap={{ scale: 1.6 }}
+          onClick={user ? handleAddToWishlist : handleOpenLoginPrompt}
+        >
+          {isProductInWishlist ? (
+            <FaHeart className={styles.wishlist} />
+          ) : (
+            <FaRegHeart />
+          )}
+        </motion.div>
+      </div>
+    </>
   );
 };
 
