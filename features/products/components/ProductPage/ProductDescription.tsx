@@ -14,7 +14,7 @@ import { FaPlusSquare } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 //Animations
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 //Styles
 import styles from "./ProductDescription.module.scss";
 import { toastStyle } from "@/shared/styles/toast";
@@ -27,6 +27,8 @@ import { useCartContext } from "@/shared/providers/CartProvider";
 import { useWishlist } from "@/shared/providers/WishlistProvider";
 //Actions
 import { addToWishlist } from "@/features/wishlist/lib/actions/addToWishlist";
+import { useAuth } from "@/shared/providers/AuthProvider";
+import LoginPrompt from "@/shared/components/LoginPrompt";
 
 interface ProductDescriptionProps {
   product: Product;
@@ -35,8 +37,11 @@ interface ProductDescriptionProps {
 const ProductDescription: React.FC<ProductDescriptionProps> = ({ product }) => {
   const { addToCart } = useCartContext();
   const { wishlist, fetchWishlist } = useWishlist();
+  const { user } = useAuth();
 
   const [quantity, setQuantity] = useState(1);
+
+  const [loginPromptOpen, setLoginPromptOpen] = useState<boolean>(false);
 
   const roundedRating = Math.round(product.stars * 2) / 2;
 
@@ -59,6 +64,12 @@ const ProductDescription: React.FC<ProductDescriptionProps> = ({ product }) => {
     (item: Product) => item._id === product._id
   );
 
+  const handleOpenLoginPrompt = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setLoginPromptOpen(true);
+  };
+
   const handleAddToWishlist = async (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
@@ -76,6 +87,11 @@ const ProductDescription: React.FC<ProductDescriptionProps> = ({ product }) => {
 
   return (
     <div className={styles.productDescription}>
+      <AnimatePresence>
+        {loginPromptOpen && (
+          <LoginPrompt onClose={() => setLoginPromptOpen(false)} />
+        )}
+      </AnimatePresence>
       <h2 className={styles.name}>{product.name}</h2>
       <h2 className={styles.price}>£{product.price}</h2>
       <div className={styles.rating}>
@@ -120,7 +136,7 @@ const ProductDescription: React.FC<ProductDescriptionProps> = ({ product }) => {
           <motion.div
             className={styles.icon}
             whileTap={{ scale: 1.6 }}
-            onClick={handleAddToWishlist}
+            onClick={user ? handleAddToWishlist : handleOpenLoginPrompt}
           >
             {isProductInWishlist ? (
               <FaHeart className={styles.filled} />

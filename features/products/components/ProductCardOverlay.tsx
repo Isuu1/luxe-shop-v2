@@ -34,7 +34,7 @@ const ProductCardOverlay: React.FC<ProductCardOverlayProps> = ({ product }) => {
 
   const { wishlist, fetchWishlist } = useWishlist();
 
-  const [loginPromptOpen, setLoginPromptOpen] = useState(false);
+  const [loginPromptOpen, setLoginPromptOpen] = useState<boolean>(false);
 
   const isProductInWishlist = wishlist?.some(
     (item: Product) => item._id === product._id
