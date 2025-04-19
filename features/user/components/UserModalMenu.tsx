@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 //Icons
 import { IoIosArrowForward } from "react-icons/io";
@@ -15,8 +16,11 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
 //Styles
 import styles from "./UserModalMenu.module.scss";
+import { toastStyle } from "@/shared/styles/toast";
 //Providers
 import { useAuth } from "@/shared/providers/AuthProvider";
+//Actions
+import { signout } from "@/features/auth/lib/actions/signout";
 
 export const userModalVariants = {
   visible: {
@@ -54,8 +58,6 @@ const UserModalMenu = () => {
         userModalRef.current &&
         !userModalRef.current.contains(event.target as Node)
       ) {
-        console.log(userModalRef.current);
-        console.log(event.target);
         setModalOpen(false);
       }
     };
@@ -68,6 +70,20 @@ const UserModalMenu = () => {
       };
     }
   }, [userModalRef, modalOpen]);
+
+  const handleSignout = async () => {
+    const { success, error } = await signout();
+    if (error) {
+      console.error("Error signing out:", error);
+    }
+    if (success) {
+      setModalOpen(false);
+      toast.success("Successfully signed out", toastStyle);
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1000);
+    }
+  };
 
   return (
     <div>
@@ -128,7 +144,10 @@ const UserModalMenu = () => {
                       <IoIosArrowForward className={styles.icon} />
                     </div>
                   </Link>
-                  <div className={`${styles.menuItem} ${styles.signout}`}>
+                  <div
+                    className={`${styles.menuItem} ${styles.signout}`}
+                    onClick={handleSignout}
+                  >
                     <FaSignOutAlt className={styles.icon} />
                     <p>Signout</p>
                   </div>
