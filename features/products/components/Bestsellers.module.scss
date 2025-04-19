@@ -2,12 +2,16 @@
   overflow: hidden;
   .container {
     display: flex;
-    //gap: 0.5rem;
-
     .item {
       flex: 0 0 33%;
       min-width: 0;
       margin: 0 10px;
     }
+  }
+}
+
+@media (max-width: 768px) {
+  .bestsellers .container .item {
+    flex: 0 0 50%;
   }
 }
