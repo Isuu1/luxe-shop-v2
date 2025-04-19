@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import toast from "react-hot-toast";
@@ -20,7 +22,9 @@ import { useWishlist } from "@/shared/providers/WishlistProvider";
 //Actions
 import { addToWishlist } from "@/features/wishlist/lib/actions/addToWishlist";
 //Animations
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { useAuth } from "@/shared/providers/AuthProvider";
+import LoginPrompt from "@/shared/components/LoginPrompt";
 
 interface SearchItemProps {
   product: Product;
@@ -37,6 +41,10 @@ const SearchItem: React.FC<SearchItemProps> = ({
 
   const { wishlist, fetchWishlist } = useWishlist();
 
+  const { user } = useAuth();
+
+  const [loginPromptOpen, setLoginPromptOpen] = useState<boolean>(false);
+
   const isProductInWishlist = wishlist?.some(
     (item: Product) => item._id === product._id
   );
@@ -45,6 +53,12 @@ const SearchItem: React.FC<SearchItemProps> = ({
     e.stopPropagation();
     e.preventDefault();
     addToCart(product, 1);
+  };
+
+  const handleOpenLoginPrompt = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setLoginPromptOpen(true);
   };
 
   const handleAddToWishlist = async (e: React.MouseEvent) => {
@@ -71,6 +85,11 @@ const SearchItem: React.FC<SearchItemProps> = ({
 
   return (
     <li onClick={handleItemClick} className={styles.searchItemWrapper}>
+      <AnimatePresence>
+        {loginPromptOpen && (
+          <LoginPrompt onClose={() => setLoginPromptOpen(false)} />
+        )}
+      </AnimatePresence>
       <Link
         href={`/product/${product.slug.current}`}
         className={styles.searchItem}
@@ -95,7 +114,7 @@ const SearchItem: React.FC<SearchItemProps> = ({
           </motion.i>
           <motion.i
             className={styles.icon}
-            onClick={handleAddToWishlist}
+            onClick={user ? handleAddToWishlist : handleOpenLoginPrompt}
             whileTap={{ scale: 1.6 }}
           >
             {isProductInWishlist ? (

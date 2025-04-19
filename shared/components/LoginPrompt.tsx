@@ -2,12 +2,12 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { createPortal } from "react-dom";
 
 //Styles
 import styles from "./LoginPrompt.module.scss";
 //Animations
 import { motion } from "framer-motion";
-import { createPortal } from "react-dom";
 
 const loginPromptVariants = {
   visible: {
@@ -36,6 +36,7 @@ const LoginPrompt: React.FC<LoginPromptProps> = ({ onClose }) => {
   // Function to stop propagation for clicks inside the prompt
   const handleInsideClick = (e: React.MouseEvent) => {
     e.stopPropagation();
+    e.preventDefault();
   };
 
   useEffect(() => {
@@ -63,7 +64,7 @@ const LoginPrompt: React.FC<LoginPromptProps> = ({ onClose }) => {
   }, []);
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClickOutside = (event: PointerEvent) => {
       if (
         loginPromptRef.current &&
         !loginPromptRef.current.contains(event.target as Node)
@@ -80,7 +81,11 @@ const LoginPrompt: React.FC<LoginPromptProps> = ({ onClose }) => {
   }, [onClose]);
 
   const promptMarkup = (
-    <div className={styles.loginPromptContainer} onClick={handleInsideClick}>
+    <div
+      className={styles.loginPromptContainer}
+      onClick={handleInsideClick}
+      onMouseDown={handleInsideClick}
+    >
       <motion.div
         className={styles.loginPrompt}
         variants={loginPromptVariants}
