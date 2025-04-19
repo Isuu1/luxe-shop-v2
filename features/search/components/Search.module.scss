@@ -60,6 +60,12 @@
     padding: 1.5rem 0;
     list-style: none;
     overflow: auto;
+    .error {
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
     .resultsCount {
       color: #fff;
       font-size: 1rem;

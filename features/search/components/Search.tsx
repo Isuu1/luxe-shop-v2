@@ -44,6 +44,8 @@ const Search: React.FC<SearchProps> = ({ closeSearch }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [matchingProducts, setMatchingProducts] = useState<Product[]>([]);
 
+  const [error, setError] = useState<string | null>(null);
+
   const inputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
@@ -70,9 +72,14 @@ const Search: React.FC<SearchProps> = ({ closeSearch }) => {
     const fetchProducts = async () => {
       try {
         const data = await getProducts();
+        if (!data || data.length === 0) {
+          setError("Failed to fetch products. Please try again later.");
+          return;
+        }
         setProducts(data);
       } catch (error) {
         console.error("Error fetching products:", error);
+        setError("Failed to fetch products. Please try again later.");
       }
     };
     fetchProducts();
@@ -135,12 +142,15 @@ const Search: React.FC<SearchProps> = ({ closeSearch }) => {
 
       {searchQuery && (
         <ul className={styles.results}>
-          <p className={styles.resultsCount}>
-            {`${matchingProducts.length} ${
-              matchingProducts.length === 1 ? "result for" : "results for"
-            } `}
-            <span className="bold">{searchQuery}</span>
-          </p>
+          {error && <p className={styles.error}>{error}</p>}
+          {!error && (
+            <p className={styles.resultsCount}>
+              {`${matchingProducts.length} ${
+                matchingProducts.length === 1 ? "result for" : "results for"
+              } `}
+              <span className="bold">{searchQuery}</span>
+            </p>
+          )}
           {matchingProducts.length > 0 &&
             matchingProducts.map((item) => (
               <SearchItem
@@ -150,7 +160,7 @@ const Search: React.FC<SearchProps> = ({ closeSearch }) => {
                 onProductClick={() => setSearchQuery(null)}
               />
             ))}
-          {matchingProducts.length === 0 && (
+          {matchingProducts.length === 0 && !error && (
             <p className={styles.noResults}>
               No products found matching your search criteria
             </p>
