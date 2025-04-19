@@ -4,7 +4,6 @@ import Link from "next/link";
 
 //Styles
 import styles from "./Header.module.scss";
-
 //Icons
 import { BiSolidCategoryAlt } from "react-icons/bi";
 import { GoHomeFill } from "react-icons/go";
@@ -18,6 +17,7 @@ import { AnimatePresence } from "framer-motion";
 import Search from "@/features/search/components/Search";
 import Cart from "@/features/cart/components/Cart";
 import UserModalMenu from "@/features/user/components/UserModalMenu";
+import HamburgerMenu from "./HamburgerMenu";
 //Providers
 import { useCartContext } from "@/shared/providers/CartProvider";
 
@@ -28,9 +28,6 @@ const Header = () => {
 
   return (
     <div className={styles.header}>
-      {/* <AnimatePresence mode="wait">
-        {loginPromptOpen && <LoginPrompt />}
-      </AnimatePresence> */}
       <AnimatePresence mode="wait">
         {searchOpen && (
           <Search
@@ -64,6 +61,7 @@ const Header = () => {
         </nav>
       </div>
       <div className={styles.right}>
+        <HamburgerMenu />
         <FaMagnifyingGlass
           className={styles.item}
           onClick={() => setSearchOpen(true)}
