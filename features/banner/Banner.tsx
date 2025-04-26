@@ -17,6 +17,7 @@ const Banner: React.FC = () => {
           Discount 50% for the first transaction
         </p>
         <Button
+          type="button"
           icon={<BiSolidSend />}
           text="Shop now "
           className={styles.button}
