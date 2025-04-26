@@ -37,6 +37,14 @@ const BackLink: React.FC = () => {
     const capitalizedLastPart =
       lastPart.charAt(0).toUpperCase() + lastPart.slice(1);
 
+    // 5.1. Handle special case for '-' in product name
+    if (capitalizedLastPart.includes("-")) {
+      const parts = capitalizedLastPart
+        .split("-")
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1));
+      return parts.join(" ");
+    }
+
     // 6. Return the result
     return capitalizedLastPart;
   };
