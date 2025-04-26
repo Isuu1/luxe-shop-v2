@@ -54,6 +54,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
             variant="primary"
             icon={<FaMinusSquare />}
             onClick={() => updateCartItemQuantity(item._id, "decrement")}
+            type="button"
             disabled={item.quantity <= 1}
           />
 
@@ -64,6 +65,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
             variant="primary"
             icon={<FaPlusSquare />}
             onClick={() => updateCartItemQuantity(item._id, "increment")}
+            type="button"
           />
         </div>
       </div>
