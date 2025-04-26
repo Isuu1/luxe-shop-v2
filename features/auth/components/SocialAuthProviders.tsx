@@ -34,7 +34,6 @@ const SocialAuthProviders = () => {
     });
     if (error) {
       console.error("Google Login Error:", error.message);
-      // Handle error
     }
   };
 
