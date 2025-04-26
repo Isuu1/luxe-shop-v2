@@ -46,7 +46,7 @@ export const userModalVariants = {
 };
 
 const UserModalMenu = () => {
-  const { email, user, username } = useAuth();
+  const { email, user, username, avatar } = useAuth();
 
   const userModalRef = useRef<HTMLDivElement>(null);
 
@@ -106,7 +106,7 @@ const UserModalMenu = () => {
             <div className={styles.header}>
               <Image
                 className={styles.avatar}
-                src="/images/avatar.gif"
+                src={avatar || "/images/avatar.gif"}
                 alt=""
                 width={60}
                 height={60}

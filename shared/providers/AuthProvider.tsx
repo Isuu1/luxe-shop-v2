@@ -15,6 +15,7 @@ interface AuthContextType {
   user: User | null;
   email: string | "";
   username: string | "";
+  avatar: string | null;
   fetchUser: () => Promise<void>;
 }
 
@@ -28,6 +29,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   //User data from profiles table
   const [email, setEmail] = useState<string | "">("");
   const [username, setUsername] = useState<string | "">("");
+  const [avatar, setAvatar] = useState<string | null>(null);
 
   const supabase = createClient();
 
@@ -54,10 +56,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         console.error("Error fetching profile data:", profileError);
         setEmail("");
         setUsername("");
+        setAvatar(null);
         return; // Exit after setting auth user but clearing profile
       }
       setEmail(profileData?.email || "");
       setUsername(profileData?.username || "");
+      setAvatar(profileData?.avatar || null);
     } catch (error) {
       console.error("Error fetching user:", error);
     } finally {
@@ -71,7 +75,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isLoading, user, email, username, fetchUser }}
+      value={{ isLoading, user, email, username, avatar, fetchUser }}
     >
       {children}
     </AuthContext.Provider>
