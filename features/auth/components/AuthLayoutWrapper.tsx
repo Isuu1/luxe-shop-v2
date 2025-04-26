@@ -9,13 +9,22 @@ import SocialAuthProviders from "./SocialAuthProviders";
 //Icons
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const AuthLayoutWrapper = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
 
   return (
     <div className={styles.authLayout}>
-      <div className={styles.background}></div>
+      <div className={styles.background}>
+        <h1 className={styles.logo}>luxe.</h1>
+        <Image
+          className={styles.image}
+          src="/images/auth-layout-image.svg"
+          alt="auth layout image"
+          fill
+        />
+      </div>
       <div className={styles.formContainer}>
         <div className={styles.backLink}>
           <MdKeyboardArrowLeft

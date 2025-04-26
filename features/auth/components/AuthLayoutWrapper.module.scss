@@ -4,6 +4,19 @@
   min-height: 100vh;
   .background {
     background: #6b37d1;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    .logo {
+      color: #fff;
+    }
+    .image {
+      position: relative !important;
+      width: 100% !important;
+      height: auto !important;
+      margin: auto !important;
+    }
   }
   .formContainer {
     display: flex;
@@ -12,9 +25,6 @@
     flex-direction: column;
     gap: 3rem;
     .backLink {
-      // display: flex;
-      // align-items: center;
-      // gap: 1rem;
       color: #5329a3;
       font-size: 1.4rem;
       font-weight: 500;
