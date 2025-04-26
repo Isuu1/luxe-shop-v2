@@ -4,6 +4,16 @@
   gap: 0.7rem;
 }
 
+.emptyWishlist {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  font-size: 1.1rem;
+}
+
 @media (min-width: "768px") {
   .wishlistGrid {
     grid-template-columns: repeat(3, 1fr);
