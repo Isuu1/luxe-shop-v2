@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "@/shared/styles/globals.css";
 import { Toaster } from "react-hot-toast";
 //Fonts
 import { Rubik } from "next/font/google";
