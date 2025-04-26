@@ -29,17 +29,19 @@ const AuthLayoutWrapper = ({ children }: { children: React.ReactNode }) => {
         />
       </div>
       <div className={styles.formContainer}>
-        <div className={styles.backLink}>
-          <MdKeyboardArrowLeft
-            className={styles.icon}
-            onClick={() => router.push("/")}
-          />
-          {/* <span>Go back to home</span> */}
+        <div className={styles.innerWrapper}>
+          <div className={styles.backLink}>
+            <MdKeyboardArrowLeft
+              className={styles.icon}
+              onClick={() => router.push("/")}
+            />
+            {/* <span>Go back to home</span> */}
+          </div>
+          <AuthNavMenu />
+          <h1 className={styles.logo}>luxe.</h1>
+          {children}
+          <SocialAuthProviders />
         </div>
-        <AuthNavMenu />
-        <h1 className={styles.logo}>luxe.</h1>
-        {children}
-        <SocialAuthProviders />
       </div>
     </div>
   );
