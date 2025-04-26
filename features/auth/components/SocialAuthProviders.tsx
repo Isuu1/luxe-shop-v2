@@ -17,7 +17,7 @@ const SocialAuthProviders = () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "github",
       options: {
-        redirectTo: `${location.origin}/api/auth/callback`,
+        redirectTo: `/api/auth/callback`,
       },
     });
     if (error) {
@@ -29,7 +29,7 @@ const SocialAuthProviders = () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${location.origin}/api/auth/callback`,
+        redirectTo: `/api/auth/callback`,
       },
     });
     if (error) {
